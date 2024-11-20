@@ -1,0 +1,14 @@
+<template>
+  <div>
+    <router-view></router-view>
+  </div>
+</template>
+
+<style>
+/* 기본 스타일 초기화 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+</style>

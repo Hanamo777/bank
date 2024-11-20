@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.bank.mapper.AccountMapper">
+    
+    <select id="getAccount" parameterType="int" resultType="com.spring.bank.dto.AccountDTO">
+        SELECT * FROM accounts WHERE account_number = #{accountNumber}
+    </select>
+    
+    <update id="updateBalance" parameterType="com.spring.bank.dto.AccountDTO">
+        UPDATE accounts SET balance = #{balance} WHERE account_number = #{accountNumber}
+    </update>
+    
+    <insert id="saveTransaction" parameterType="com.spring.bank.dto.TransactionDTO">
+    INSERT INTO transactions (sender_account, receiver_account, amount, transaction_time, balance_after)
+    VALUES (#{senderAccount}, #{receiverAccount}, #{amount}, NOW(), #{balanceAfter})
+	</insert>
+
+	<select id="getTransactionHistory" parameterType="int" resultType="com.spring.bank.dto.TransactionDTO">
+    SELECT * FROM transactions 
+    WHERE sender_account = #{accountNumber} OR receiver_account = #{accountNumber}
+    ORDER BY transaction_time DESC
+	</select>
+    
+    <insert id="createAccount" parameterType="com.spring.bank.dto.AccountDTO">
+    INSERT INTO accounts (account_number, balance, user_id) 
+    VALUES (#{accountNumber}, #{balance}, #{userId})
+	</insert>
+</mapper>

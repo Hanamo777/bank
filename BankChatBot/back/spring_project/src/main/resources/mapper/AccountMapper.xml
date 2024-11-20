@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.bank.mapper.AccountMapper">
+    
+    <select id="getAccount" parameterType="int" resultType="com.spring.bank.dto.AccountDTO">
+	   SELECT a.*, u.name as userName
+	   FROM accounts a
+	   JOIN users u ON a.user_id = u.user_id
+	   WHERE a.account_number = #{accountNumber}
+	</select>
+	
+	<select id="getAccountByUserId" parameterType="String" resultType="com.spring.bank.dto.AccountDTO">
+	   SELECT a.*, u.name as userName
+	   FROM accounts a
+	   JOIN users u ON a.user_id = u.user_id
+	   WHERE a.user_id = #{userId}
+	</select>
+    
+    <update id="updateBalance" parameterType="com.spring.bank.dto.AccountDTO">
+        UPDATE accounts SET balance = #{balance} WHERE account_number = #{accountNumber}
+    </update>
+    
+    <insert id="saveTransaction" parameterType="com.spring.bank.dto.TransactionDTO">
+    INSERT INTO transactions (sender_account, receiver_account, amount, transaction_time, balance_after)
+    VALUES (#{senderAccount}, #{receiverAccount}, #{amount}, NOW(), #{balanceAfter})
+	</insert>
+
+	<select id="getTransactionHistory" parameterType="int" resultType="com.spring.bank.dto.TransactionDTO">
+    SELECT filtered.*, 
+           sender_user.name as senderName,
+           receiver_user.name as receiverName
+    FROM (
+        SELECT 
+            t.*,
+            CASE 
+                WHEN t.sender_account = #{accountNumber} 
+                    AND t.amount = (
+                        SELECT MAX(amount) 
+                        FROM transactions 
+                        WHERE transaction_time = t.transaction_time
+                        AND (sender_account = #{accountNumber} OR receiver_account = #{accountNumber})
+                    )
+                    THEN 1
+                WHEN t.receiver_account = #{accountNumber} 
+                    AND t.amount = (
+                        SELECT MIN(amount) 
+                        FROM transactions 
+                        WHERE transaction_time = t.transaction_time
+                        AND (sender_account = #{accountNumber} OR receiver_account = #{accountNumber})
+                    )
+                    THEN 1
+                ELSE 0
+            END as is_valid
+        FROM transactions t
+        WHERE t.sender_account = #{accountNumber} 
+        OR t.receiver_account = #{accountNumber}
+    ) filtered
+    JOIN accounts sender_acc ON filtered.sender_account = sender_acc.account_number
+    JOIN users sender_user ON sender_acc.user_id = sender_user.user_id
+    JOIN accounts receiver_acc ON filtered.receiver_account = receiver_acc.account_number
+    JOIN users receiver_user ON receiver_acc.user_id = receiver_user.user_id
+    WHERE is_valid = 1
+    ORDER BY transaction_time DESC
+	</select>
+    
+    <insert id="createAccount" parameterType="com.spring.bank.dto.AccountDTO">
+    INSERT INTO accounts (account_number, balance, user_id) 
+    VALUES (#{accountNumber}, #{balance}, #{userId})
+	</insert>
+</mapper>
