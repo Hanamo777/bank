@@ -7,7 +7,7 @@
         <div class="account-info">
           <h3>Account Number : {{ accountNumber }}</h3>
           <h3>Balance</h3>
-          <p class="balance">{{ balance.toLocaleString() }}원</p>
+          <p class="balance">$ {{ balance.toLocaleString() }}</p>
         </div>
       </div>
       <div class="button-group">

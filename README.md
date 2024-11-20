@@ -100,11 +100,3 @@ You can use AI chat bot and Banking CRUD.
 Frontend (Vue.js) <-> Backend (Spring) <-> Database (MySQL)
 ↕
 Chat GPT API
-
-## ⚙️ Vue Run Prompt
-
-```bash
-# Frontend
-npm i axios (or npm install)
-npm run dev
-```
