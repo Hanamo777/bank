@@ -8,7 +8,13 @@ You can use AI chat bot and Banking CRUD.
 
 ### 1. Chat Bot
 
-- click
+- Before start
+
+1. Put GPT API on Spring application.properties file.
+2. Run SQL. file on MySql.
+
+- Click on 'Ask Hana Bot' in the upper right corner.
+- Chat Bot will appear.
 
 ![click chat bot](./images/chatbot1.png)
 
