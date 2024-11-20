@@ -11,11 +11,7 @@
           <div class="login-form">
             <div class="input-group">
               <label>I D</label>
-              <input
-                type="text"
-                v-model="userId"
-                placeholder="아이디를 입력하세요"
-              />
+              <input type="text" v-model="userId" placeholder="put your id" />
             </div>
 
             <div class="input-group">
@@ -23,7 +19,7 @@
               <input
                 type="password"
                 v-model="password"
-                placeholder="비밀번호를 입력하세요"
+                placeholder="put your password"
               />
             </div>
 
