@@ -1,5 +1,5 @@
 # Project site link
-http://13.125.245.115/
+http://54.180.119.166
 
 # Banking and Chatbot System
 
