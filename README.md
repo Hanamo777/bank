@@ -11,12 +11,6 @@ You can use AI chat bot and Banking CRUD.
 
 ### 1. Chat Bot
 
-- Before start
-
-1. Put GPT API on Spring application.properties file.
-2. Run SQL. file on MySql.
-3. Run Spring, Vue project. (vue project propmt : npm i axios, npm run dev)
-
 - Click on 'Ask Hana Bot' in the upper right corner.
 - Chat Bot will appear.
 
