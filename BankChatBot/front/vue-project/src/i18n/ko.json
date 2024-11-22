@@ -1,0 +1,312 @@
+{
+  "header": {
+    "menu": {
+      "corporate": "기업뱅킹",
+      "card": "하나카드",
+      "about": "은행소개",
+      "career": "채용안내",
+      "certification": "인증센터",
+      "language": "Language"
+    },
+    "auth": {
+      "login": "로그인",
+      "logout": "로그아웃",
+      "welcome": "{name} 님"
+    },
+    "nav": {
+      "bank": "하나은행",
+      "inquiry": "조회",
+      "transfer": "이체",
+      "bills": "공과금",
+      "forex": "외환",
+      "products": "금융상품",
+      "search": "검색",
+      "menu": "메뉴"
+    },
+    "chat": {
+      "ask": "하이봇뱅에게 물어보세요"
+    }
+  },
+
+  "main": {
+    "carousel": {
+      "slide1": {
+        "tag": "이벤트",
+        "title": "수험생을 응원해요\n내마음을 송금해요",
+        "desc": "응원 메시지카드도 보내고\n즐거운 저녁도 함께 해보세요!",
+        "button": "자세히보기"
+      },
+      "slide2": {
+        "tag": "특별 이벤트",
+        "title": "연말 정산 혜택\n최대 10% 캐시백",
+        "desc": "연말을 맞이하여 특별한 혜택을 누려보세요!",
+        "button": "지금 참여하기"
+      },
+      "slide3": {
+        "tag": "새소식",
+        "title": "모바일 뱅킹 앱 업데이트\n더 편리해진 기능",
+        "desc": "새롭게 개선된 기능으로 더 쉽고 빠르게 이용하세요!",
+        "button": "업데이트 확인"
+      }
+    },
+    "quickMenu": {
+      "history": "거래 내역",
+      "transfer": "이체",
+      "bills": "공과금",
+      "exchange": "환율",
+      "openBanking": "오픈뱅킹",
+      "security": "인증센터",
+      "quickView": "빠른조회",
+      "customerService": "고객센터"
+    },
+    "bottomMenu": {
+      "savings": {
+        "title": "예적금",
+        "desc": "부자되는 꿀팁정보"
+      },
+      "fund": {
+        "title": "펀드",
+        "desc": "한 눈에 보는 펀드랭킹"
+      },
+      "forex": {
+        "title": "환전지갑",
+        "desc": "알뜰하게 환전하기"
+      },
+      "pension": {
+        "title": "퇴직연금",
+        "desc": "든든한 노후를 위해"
+      },
+      "loan": {
+        "title": "대출",
+        "desc": "3분이면 한도조회 OK!"
+      }
+    },
+    "news": {
+      "title": "새소식",
+      "more": "더보기",
+      "items": {
+        "1": {
+          "title": "국세청 연계 공공마이데이터관련 서비스 일시중단 안내",
+          "date": "2024-11-15"
+        },
+        "2": {
+          "title": "일부 금융거래 업무중단 안내",
+          "date": "2024-11-15"
+        },
+        "3": {
+          "title": "하나은행 오프라인 이벤트 대행사 선정 공고",
+          "date": "2024-11-15"
+        }
+      }
+    }
+  },
+
+  "messages": {
+    "loginRequired": "로그인이 필요한 서비스입니다.",
+    "logoutConfirm": "로그아웃 하시겠습니까?",
+    "success": "성공적으로 처리되었습니다.",
+    "error": "오류가 발생했습니다.",
+    "sessionExpired": "세션이 만료되었습니다. 다시 로그인해주세요."
+  },
+  "transaction": {
+    "title": "거래 내역",
+    "table": {
+      "dateTime": "날짜/시간",
+      "type": "구분",
+      "accountHolder": "예금주",
+      "amount": "금액",
+      "balance": "잔액"
+    },
+    "types": {
+      "deposit": "입금",
+      "withdraw": "출금"
+    },
+    "buttons": {
+      "home": "메인으로"
+    }
+  },
+  "chat": {
+    "title": "하이봇뱅",
+    "placeholder": "메시지를 입력하세요",
+    "send": "전송",
+    "close": "닫기",
+    "botName": "하이봇뱅",
+    "error": "메시지 전송 중 오류가 발생했습니다."
+  },
+  "account": {
+    "title": "{name}님의 계좌",
+    "accountNumber": "계좌번호 : {number}",
+    "balance": "잔액",
+    "amount": "{amount}원",
+    "buttons": {
+      "transfer": "계좌 이체",
+      "history": "거래 내역",
+      "game": "King Sejong"
+    },
+    "messages": {
+      "inactive": "해당 계좌는 비활성화 상태입니다.",
+      "error": "계좌 조회 실패"
+    }
+  },
+  "admin": {
+    "title": "관리자님의 계좌",
+    "accountNumber": "계좌번호 : {number}",
+    "balance": "잔액",
+    "amount": "{amount}원",
+    "buttons": {
+      "transfer": "계좌 이체",
+      "history": "거래 내역",
+      "manage": "계좌 관리",
+      "logout": "로그아웃"
+    },
+    "messages": {
+      "error": "계좌 조회 실패"
+    }
+  },
+  "exchange": {
+    "title": "현재 환율 정보",
+    "loading": "로딩 중...",
+    "error": "환율 정보를 가져오지 못했습니다. 다시 시도해주세요.",
+    "table": {
+      "currency": "통화",
+      "buyRate": "사실 때 환율",
+      "buySpread": "사실 때 Spread",
+      "sellRate": "파실 때 환율",
+      "sellSpread": "파실 때 Spread",
+      "baseRate": "매매 기준율"
+    }
+  },
+  "login": {
+    "title": "로그인",
+    "form": {
+      "userId": "아이디",
+      "userIdPlaceholder": "아이디를 입력하세요",
+      "password": "비밀번호",
+      "passwordPlaceholder": "비밀번호를 입력하세요"
+    },
+    "buttons": {
+      "login": "로그인",
+      "register": "회원가입"
+    },
+    "help": {
+      "findId": "아이디 찾기",
+      "findPassword": "비밀번호 찾기",
+      "certificate": "인증서 로그인"
+    },
+    "messages": {
+      "failure": "로그인 실패",
+      "error": "로그인 실패:"
+    }
+  },
+  "referral": {
+    "title": "추천인이 있으신가요?",
+    "form": {
+      "id": "추천인 ID",
+      "placeholder": "추천인 ID를 입력해주세요."
+    },
+    "buttons": {
+      "submit": "입력",
+      "skip": "건너뛰기"
+    },
+    "messages": {
+      "confirm": "추천인 ID와 이름이 다음과 같은지 다시 한 번 확인하고 맞다면 계속 진행해주세요!\nID: {id}\n이름: {name}",
+      "success": "추천 성공!",
+      "noUser": "해당 추천인이 없습니다.",
+      "error": "해당 ID를 가진 사용자 정보가 없습니다."
+    }
+  },
+  "register": {
+    "title": "회원가입",
+    "form": {
+      "userId": {
+        "label": "아이디",
+        "placeholder": "사용하실 아이디를 입력하세요"
+      },
+      "password": {
+        "label": "비밀번호",
+        "placeholder": "비밀번호를 입력하세요",
+        "hint": "영문, 숫자, 특수문자 조합 8-20자"
+      },
+      "name": {
+        "label": "이름",
+        "placeholder": "이름을 입력하세요"
+      }
+    },
+    "info": {
+      "title": "회원가입 시 유의사항",
+      "points": {
+        "account": "가입 시 자동으로 계좌가 개설됩니다.",
+        "referral": "추천인 입력 시 확인 절차가 진행됩니다.",
+        "login": "가입 완료 후 로그인 페이지로 이동합니다."
+      }
+    },
+    "buttons": {
+      "register": "가입하기",
+      "cancel": "취소"
+    },
+    "messages": {
+      "noId": "ID를 입력해주세요.",
+      "invalidId": "ID에는 영어 대/소문자와 숫자만 포함될 수 있습니다.",
+      "invalidPassword": "비밀번호는 영문, 숫자, 특수문자 조합 8-20자여야 합니다.",
+      "noName": "이름을 입력해주세요.",
+      "duplicateId": "이미 존재하는 ID입니다.",
+      "error": "회원가입 실패:"
+    }
+  },
+  "transfer": {
+    "title": "계좌 이체",
+    "balance": "현재 잔액: {amount}원",
+    "form": {
+      "receiverAccount": {
+        "label": "받는 계좌번호",
+        "placeholder": "받는 계좌번호를 입력하세요"
+      },
+      "amount": {
+        "label": "이체 금액",
+        "placeholder": "이체 금액을 입력하세요"
+      }
+    },
+    "fee": {
+      "label": "수수료: {amount}원",
+      "total": "총 금액: {amount}원"
+    },
+    "buttons": {
+      "transfer": "이체하기",
+      "home": "메인으로"
+    },
+    "messages": {
+      "balanceError": "잔액 조회 실패:",
+      "inactive": "계좌가 비활성화 상태입니다. 이체를 실행할 수 없습니다.",
+      "selfTransfer": "본인 계좌로는 이체할 수 없습니다.",
+      "receiverInactive": "이체할 수 없습니다. 상대 계좌는 비활성화 상태입니다.",
+      "noAccount": "해당 계좌가 없습니다.",
+      "confirm": "{name}님에게 {amount}원을 이체하시겠습니까?\n(수수료 {fee}원 포함 총 {total}원)",
+      "success": "이체가 완료되었습니다!",
+      "fail": "이체 실패",
+      "invalidAccount": "유효하지 않은 계좌번호입니다."
+    }
+  },
+  "userList": {
+    "title": "가입자 목록",
+    "table": {
+      "id": "ID",
+      "password": "비밀번호",
+      "name": "이름",
+      "accountNumber": "계좌번호",
+      "status": "계좌 활성화 여부"
+    },
+    "status": {
+      "active": "활성화",
+      "inactive": "비활성화"
+    },
+    "buttons": {
+      "home": "메인으로"
+    },
+    "messages": {
+      "error": {
+        "fetch": "거래내역 조회 실패:",
+        "status": "계정 상태 변경 실패"
+      }
+    }
+  }
+}

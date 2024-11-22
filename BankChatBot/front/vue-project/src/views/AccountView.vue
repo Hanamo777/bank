@@ -2,18 +2,27 @@
   <Header></Header>
   <div class="account-container">
     <div class="account-box">
-      <h2 class="section-title">{{ userName }}'s Account</h2>
+      <h2 class="section-title">
+        {{ $t('account.title', { name: userName }) }}
+      </h2>
       <div class="info-box">
         <div class="account-info">
-          <h3>Account Number : {{ accountNumber }}</h3>
-          <h3>Balance</h3>
-          <p class="balance">$ {{ balance.toLocaleString() }}</p>
+          <h3>{{ $t('account.accountNumber', { number: accountNumber }) }}</h3>
+          <h3>{{ $t('account.balance') }}</h3>
+          <p class="balance">
+            {{ $t('account.amount', { amount: balance.toLocaleString() }) }}
+          </p>
         </div>
       </div>
       <div class="button-group">
-        <button class="transfer-button" @click="showTransfer">Transfer</button>
+        <button class="transfer-button" @click="showTransfer">
+          {{ $t('account.buttons.transfer') }}
+        </button>
         <button class="history-button" @click="showHistory">
-          Transaction History
+          {{ $t('account.buttons.history') }}
+        </button>
+        <button class="game-button" @click="showGame">
+          {{ $t('account.buttons.game') }}
         </button>
       </div>
     </div>
@@ -23,11 +32,16 @@
 <script>
 import Header from '@/components/Header.vue';
 import { api } from '@/api';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'AccountView',
   components: {
     Header,
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -54,18 +68,21 @@ export default {
         const response = await api.get(`/account/${this.accountNumber}`);
         this.balance = response.data.balance;
       } catch (error) {
-        console.error('Account Load Failed:', error);
+        console.error(this.$t('account.messages.error'), error);
       }
     },
     showTransfer() {
       if (this.userIsActive == 0) {
-        alert('Your account is disabled.');
+        alert(this.$t('account.messages.inactive'));
       } else {
         this.$router.push('/transfer');
       }
     },
     showHistory() {
       this.$router.push('/history');
+    },
+    showGame() {
+      this.$router.push('/game');
     },
     logout() {
       localStorage.removeItem('user');
@@ -127,7 +144,8 @@ export default {
 
 .transfer-button,
 .history-button,
-.logout-button {
+.logout-button,
+.game-button {
   flex: 1;
   padding: 0.75rem;
   border: none;
@@ -147,13 +165,15 @@ export default {
 }
 
 .history-button,
-.logout-button {
+.logout-button,
+.game-button {
   background-color: #e9ecef;
   color: #495057;
 }
 
 .history-button:hover,
-.logout-button:hover {
+.logout-button:hover,
+.game-button:hover {
   background-color: #dee2e6;
 }
 </style>

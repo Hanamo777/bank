@@ -1,0 +1,310 @@
+{
+  "header": {
+    "menu": {
+      "corporate": "Corporate Banking",
+      "card": "Hana Card",
+      "about": "About Us",
+      "career": "Careers",
+      "certification": "Certification Center",
+      "language": "Language"
+    },
+    "auth": {
+      "login": "Login",
+      "logout": "Logout",
+      "welcome": "Welcome, {name}"
+    },
+    "nav": {
+      "bank": "Hana Bank",
+      "inquiry": "Account",
+      "transfer": "Transfer",
+      "bills": "Bills",
+      "forex": "Forex",
+      "products": "Products",
+      "search": "Search",
+      "menu": "Menu"
+    },
+    "chat": {
+      "ask": "Ask HiBot"
+    }
+  },
+  "main": {
+    "carousel": {
+      "slide1": {
+        "tag": "Event",
+        "title": "Support Students\nSend Your Heart",
+        "desc": "Send a message card\nand enjoy dinner together!",
+        "button": "Learn More"
+      },
+      "slide2": {
+        "tag": "Special Event",
+        "title": "Year-end Tax Benefits\nUp to 10% Cashback",
+        "desc": "Enjoy special benefits for the year-end!",
+        "button": "Join Now"
+      },
+      "slide3": {
+        "tag": "News",
+        "title": "Mobile Banking App Update\nImproved Features",
+        "desc": "Use new and improved features more easily and quickly!",
+        "button": "Check Update"
+      }
+    },
+    "quickMenu": {
+      "history": "Transaction History",
+      "transfer": "Transfer",
+      "bills": "Bills",
+      "exchange": "Exchange Rate",
+      "openBanking": "Open Banking",
+      "security": "Security Center",
+      "quickView": "Quick View",
+      "customerService": "Customer Service"
+    },
+    "bottomMenu": {
+      "savings": {
+        "title": "Savings",
+        "desc": "Tips for Wealth"
+      },
+      "fund": {
+        "title": "Fund",
+        "desc": "Fund Rankings at a Glance"
+      },
+      "forex": {
+        "title": "Forex Wallet",
+        "desc": "Smart Currency Exchange"
+      },
+      "pension": {
+        "title": "Retirement Pension",
+        "desc": "For Your Secure Future"
+      },
+      "loan": {
+        "title": "Loan",
+        "desc": "Check Limit in 3 Minutes!"
+      }
+    },
+    "news": {
+      "title": "News",
+      "more": "More",
+      "items": {
+        "1": {
+          "title": "Notice: Temporary Suspension of Tax Office-linked Public MyData Service",
+          "date": "2024-11-15"
+        },
+        "2": {
+          "title": "Notice: Partial Banking Service Interruption",
+          "date": "2024-11-15"
+        },
+        "3": {
+          "title": "Announcement: Selection of Offline Event Agency for Hana Bank",
+          "date": "2024-11-15"
+        }
+      }
+    }
+  },
+  "messages": {
+    "loginRequired": "Please login to use this service.",
+    "logoutConfirm": "Are you sure you want to logout?",
+    "success": "Successfully processed.",
+    "error": "An error occurred.",
+    "sessionExpired": "Session expired. Please login again."
+  },
+  "transaction": {
+    "title": "Transaction History",
+    "table": {
+      "dateTime": "Date/Time",
+      "type": "Type",
+      "accountHolder": "Account Holder",
+      "amount": "Amount",
+      "balance": "Balance"
+    },
+    "types": {
+      "deposit": "Deposit",
+      "withdraw": "Withdrawal"
+    },
+    "buttons": {
+      "home": "Go to Main"
+    }
+  },
+  "chat": {
+    "title": "HiBot Bank",
+    "placeholder": "Enter your message",
+    "send": "Send",
+    "close": "Close",
+    "botName": "HiBot Bank",
+    "error": "An error occurred while sending the message"
+  },
+  "account": {
+    "title": "{name}'s Account",
+    "accountNumber": "Account Number : {number}",
+    "balance": "Balance",
+    "amount": "₩ {amount}",
+    "buttons": {
+      "transfer": "Transfer",
+      "history": "History",
+      "game": "King Sejong"
+    },
+    "messages": {
+      "inactive": "This account is currently inactive.",
+      "error": "Failed to retrieve account information"
+    }
+  },
+  "admin": {
+    "title": "Administrator Account",
+    "accountNumber": "Account Number : {number}",
+    "balance": "Balance",
+    "amount": "₩ {amount}",
+    "buttons": {
+      "transfer": "Transfer",
+      "history": "History",
+      "manage": "Account Management",
+      "logout": "Logout"
+    },
+    "messages": {
+      "error": "Failed to retrieve account information"
+    }
+  },
+  "exchange": {
+    "title": "Current Exchange Rates",
+    "loading": "Loading...",
+    "error": "Failed to fetch exchange rates. Please try again.",
+    "table": {
+      "currency": "Currency",
+      "buyRate": "Buy Rate",
+      "buySpread": "Buy Spread",
+      "sellRate": "Sell Rate",
+      "sellSpread": "Sell Spread",
+      "baseRate": "Base Rate"
+    }
+  },
+  "login": {
+    "title": "Login",
+    "form": {
+      "userId": "ID",
+      "userIdPlaceholder": "Enter your ID",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password"
+    },
+    "buttons": {
+      "login": "Login",
+      "register": "Sign Up"
+    },
+    "help": {
+      "findId": "Find ID",
+      "findPassword": "Find Password",
+      "certificate": "Certificate Login"
+    },
+    "messages": {
+      "failure": "Login failed",
+      "error": "Login failed:"
+    }
+  },
+  "referral": {
+    "title": "Do you have a referral?",
+    "form": {
+      "id": "Referral ID",
+      "placeholder": "Please enter referral ID"
+    },
+    "buttons": {
+      "submit": "Submit",
+      "skip": "Skip"
+    },
+    "messages": {
+      "confirm": "Please confirm if the following referral information is correct:\nID: {id}\nName: {name}",
+      "success": "Referral successful!",
+      "noUser": "Referral ID not found.",
+      "error": "No user found with this ID."
+    }
+  },
+  "register": {
+    "title": "Sign Up",
+    "form": {
+      "userId": {
+        "label": "ID",
+        "placeholder": "Enter ID you want to use"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter password",
+        "hint": "8-20 characters with letters, numbers, and special characters"
+      },
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter your name"
+      }
+    },
+    "info": {
+      "title": "Important Notice",
+      "points": {
+        "account": "An account will be automatically created upon registration.",
+        "referral": "Referral verification process will follow.",
+        "login": "You will be directed to the login page after completion."
+      }
+    },
+    "buttons": {
+      "register": "Register",
+      "cancel": "Cancel"
+    },
+    "messages": {
+      "noId": "Please enter an ID.",
+      "invalidId": "ID can only contain letters and numbers.",
+      "invalidPassword": "Password must be 8-20 characters with letters, numbers, and special characters.",
+      "noName": "Please enter your name.",
+      "duplicateId": "This ID already exists.",
+      "error": "Registration failed:"
+    }
+  },
+  "transfer": {
+    "title": "Bank Transfer",
+    "balance": "Current Balance: ₩{amount}",
+    "form": {
+      "receiverAccount": {
+        "label": "Recipient Account",
+        "placeholder": "Enter recipient account number"
+      },
+      "amount": {
+        "label": "Transfer Amount",
+        "placeholder": "Enter transfer amount"
+      }
+    },
+    "fee": {
+      "label": "Fee: ₩{amount}",
+      "total": "Total Amount: ₩{amount}"
+    },
+    "buttons": {
+      "transfer": "Transfer",
+      "home": "Main"
+    },
+    "messages": {
+      "balanceError": "Failed to retrieve balance:",
+      "inactive": "Account is inactive. Transfer cannot be executed.",
+      "selfTransfer": "Cannot transfer to your own account.",
+      "receiverInactive": "Cannot transfer. Recipient account is inactive.",
+      "noAccount": "Account does not exist.",
+      "confirm": "Would you like to transfer ₩{amount} to {name}?\n(Total ₩{total} including ₩{fee} fee)",
+      "success": "Transfer completed!",
+      "fail": "Transfer failed",
+      "invalidAccount": "Invalid account number."
+    }
+  },
+  "userList": {
+    "title": "User List",
+    "table": {
+      "id": "ID",
+      "password": "Password",
+      "name": "Name",
+      "accountNumber": "Account Number",
+      "status": "Account Status"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "buttons": {
+      "home": "Main"
+    },
+    "messages": {
+      "error": {
+        "fetch": "Failed to fetch user list:",
+        "status": "Failed to change account status"
+      }
+    }
+  }
+}

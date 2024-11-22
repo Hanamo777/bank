@@ -2,20 +2,25 @@
   <div
     v-if="isOpen"
     class="chat-popup"
-    ref="chatbox"
-    :style="{ left: position.x + 'px', top: position.y + 'px' }"
-    @mousedown="startDragging"
-    @mousemove="onDragging"
-    @mouseup="stopDragging"
-    @mouseleave="stopDragging"
+    :style="{
+      left: position.x + 'px',
+      top: position.y + 'px',
+      width: size.width + 'px',
+      height: size.height + 'px',
+    }"
+    @mousedown="startDrag"
   >
     <div class="chat-window">
-      <div
-        class="chat-header"
-        :style="{ cursor: isDragging ? 'grabbing' : 'grab' }"
-      >
-        <h3>Hana Chat Bot</h3>
-        <button @click="closeChat" class="close-btn">×</button>
+      <div class="chat-header" @mousedown="startDrag">
+        <h3>{{ $t('chat.title') }}</h3>
+        <div class="header-buttons">
+          <button @click="toggleSize" class="size-btn">
+            {{ isExpanded ? '−' : '＋' }}
+          </button>
+          <button @click="closeChat" class="close-btn">
+            {{ $t('chat.close') }}
+          </button>
+        </div>
       </div>
       <div class="chat-messages">
         <div
@@ -30,17 +35,25 @@
         <input
           v-model="userInput"
           @keyup.enter="sendMessage"
-          placeholder="Enter your message"
+          :placeholder="$t('chat.placeholder')"
         />
-        <button @click="sendMessage" class="send-btn">Send</button>
+        <button @click="sendMessage" class="send-btn">
+          {{ $t('chat.send') }}
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: 'ChatPopup',
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   data() {
     const user = JSON.parse(localStorage.getItem('user'));
     const userId = user ? user.userId : 'guest';
@@ -51,21 +64,28 @@ export default {
       isOpen: chatOpen,
       userInput: '',
       messages: [],
-      isDragging: false,
       position: {
-        x: 0,
-        y: 0,
+        x: window.innerWidth / 2 - 175,
+        y: window.innerHeight / 2 - 250,
       },
-      dragOffset: {
-        x: 0,
-        y: 0,
+      size: {
+        width: 350,
+        height: 500,
       },
+      isExpanded: false,
+      baseSize: {
+        width: 350,
+        height: 500,
+      },
+      expandedSize: {
+        width: 500,
+        height: 714,
+      },
+      isDragging: false,
+      dragOffset: { x: 0, y: 0 },
     };
   },
   mounted() {
-    // 초기 위치를 화면 중앙으로 설정
-    this.centerChat();
-
     const user = JSON.parse(localStorage.getItem('user'));
     const userId = user ? user.userId : 'guest';
     const storage = user ? localStorage : sessionStorage;
@@ -92,31 +112,6 @@ export default {
     },
   },
   methods: {
-    centerChat() {
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
-      const chatWidth = 350; // chat-window의 width
-      const chatHeight = 500; // chat-window의 height
-
-      this.position.x = (windowWidth - chatWidth) / 2;
-      this.position.y = (windowHeight - chatHeight) / 2;
-    },
-    startDragging(event) {
-      if (event.target.closest('.chat-header')) {
-        this.isDragging = true;
-        this.dragOffset.x = event.clientX - this.position.x;
-        this.dragOffset.y = event.clientY - this.position.y;
-      }
-    },
-    onDragging(event) {
-      if (this.isDragging) {
-        this.position.x = event.clientX - this.dragOffset.x;
-        this.position.y = event.clientY - this.dragOffset.y;
-      }
-    },
-    stopDragging() {
-      this.isDragging = false;
-    },
     async sendMessage() {
       if (!this.userInput.trim()) return;
 
@@ -130,16 +125,19 @@ export default {
           content: this.userInput,
         });
 
-        const response = await fetch('http://localhost:8081/api/chat/send', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            message: this.userInput,
-            userId: userId,
-          }),
-        });
+        const response = await fetch(
+          'http://54.180.119.166:8080/api/chat/send',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              message: this.userInput,
+              userId: userId,
+            }),
+          }
+        );
 
         const botResponse = await response.json();
 
@@ -149,10 +147,10 @@ export default {
           content: botResponse.message,
         });
       } catch (error) {
-        console.error('Error:', error);
+        console.error(this.$t('chat.error'), error);
       }
 
-      this.userInput = ''; // 입력창 초기화
+      this.userInput = '';
     },
     clearChat() {
       const user = JSON.parse(localStorage.getItem('user'));
@@ -168,25 +166,69 @@ export default {
       const storage = user ? localStorage : sessionStorage;
       storage.setItem(`chatOpen_${userId}`, false);
     },
+    toggleSize() {
+      this.isExpanded = !this.isExpanded;
+      this.size = this.isExpanded ? this.expandedSize : this.baseSize;
+
+      const widthDiff = (this.expandedSize.width - this.baseSize.width) / 2;
+      const heightDiff = (this.expandedSize.height - this.baseSize.height) / 2;
+
+      if (this.isExpanded) {
+        this.position.x -= widthDiff;
+        this.position.y -= heightDiff;
+      } else {
+        this.position.x += widthDiff;
+        this.position.y += heightDiff;
+      }
+    },
+    startDrag(event) {
+      if (
+        event.target.classList.contains('close-btn') ||
+        event.target.tagName === 'INPUT' ||
+        event.target.tagName === 'BUTTON'
+      )
+        return;
+
+      this.isDragging = true;
+      this.dragOffset = {
+        x: event.clientX - this.position.x,
+        y: event.clientY - this.position.y,
+      };
+      document.addEventListener('mousemove', this.drag);
+      document.addEventListener('mouseup', this.stopDrag);
+    },
+    drag(event) {
+      if (!this.isDragging) return;
+      this.position = {
+        x: event.clientX - this.dragOffset.x,
+        y: event.clientY - this.dragOffset.y,
+      };
+    },
+    stopDrag() {
+      this.isDragging = false;
+      document.removeEventListener('mousemove', this.drag);
+      document.removeEventListener('mouseup', this.stopDrag);
+    },
   },
 };
 </script>
 
 <style scoped>
+/* 기존 스타일 유지 */
 .chat-popup {
-  position: fixed;
+  position: absolute;
   z-index: 1000;
 }
 
 .chat-window {
-  width: 350px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
   background: white;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  user-select: none; /* 드래그 중 텍스트 선택 방지 */
+  position: relative;
 }
 
 .chat-header {
@@ -197,26 +239,40 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  cursor: grab;
+  cursor: move;
 }
 
-.chat-header:active {
-  cursor: grabbing;
+.header-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
+.size-btn,
 .close-btn {
   background: none;
   border: none;
   color: white;
   font-size: 20px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+}
+
+.size-btn:hover,
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
 }
 
 .chat-messages {
   flex-grow: 1;
   padding: 15px;
   overflow-y: auto;
-  user-select: text; /* 메시지 텍스트는 선택 가능하게 */
 }
 
 .message {

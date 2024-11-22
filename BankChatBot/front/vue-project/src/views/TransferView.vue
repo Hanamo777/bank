@@ -1,45 +1,54 @@
-```vue
 <template>
   <div class="main-container">
     <Header></Header>
     <main>
       <div class="transfer-container">
-        <h2 class="section-title">Transfer</h2>
+        <h2 class="section-title">{{ $t('transfer.title') }}</h2>
         <div class="transfer-form">
           <div class="info-box">
             <div class="balance-info">
-              Current Balance: ${{ balance.toLocaleString() }}
+              {{ $t('transfer.balance', { amount: balance.toLocaleString() }) }}
             </div>
           </div>
 
           <div class="input-group">
-            <label>Recipient Account Number</label>
+            <label>{{ $t('transfer.form.receiverAccount.label') }}</label>
             <input
               type="number"
               v-model="receiverAccount"
-              placeholder="Enter recipient account number"
+              :placeholder="$t('transfer.form.receiverAccount.placeholder')"
             />
           </div>
 
           <div class="input-group">
-            <label>Transfer Amount</label>
+            <label>{{ $t('transfer.form.amount.label') }}</label>
             <input
               type="number"
               v-model="amount"
-              placeholder="Enter transfer amount"
+              :placeholder="$t('transfer.form.amount.placeholder')"
             />
           </div>
 
           <div class="fee-details">
-            <div class="fee-info">Fee: $500</div>
+            <div class="fee-info">
+              {{ $t('transfer.fee.label', { amount: fee }) }}
+            </div>
             <div class="total-info">
-              Total Amount: ${{ (Number(amount) + 500).toLocaleString() }}
+              {{
+                $t('transfer.fee.total', {
+                  amount: (Number(amount) + fee).toLocaleString(),
+                })
+              }}
             </div>
           </div>
 
           <div class="button-group">
-            <button class="transfer-button" @click="transfer">Transfer</button>
-            <button class="home-button" @click="goHome">Home</button>
+            <button class="transfer-button" @click="transfer">
+              {{ $t('transfer.buttons.transfer') }}
+            </button>
+            <button class="home-button" @click="goHome">
+              {{ $t('transfer.buttons.home') }}
+            </button>
           </div>
         </div>
       </div>
@@ -50,11 +59,16 @@
 <script>
 import Header from '@/components/Header.vue';
 import { api } from '@/api';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'TransferView',
   components: {
     Header,
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -64,6 +78,7 @@ export default {
       myAccount: 0,
       isLoggedIn: false,
       userName: '',
+      fee: 500,
     };
   },
   created() {
@@ -75,6 +90,7 @@ export default {
     }
     this.myAccount = user.accountNumber;
     this.getBalance();
+    this.checkGameResult();
   },
   methods: {
     checkLoginStatus() {
@@ -95,51 +111,62 @@ export default {
         const response = await api.get(`/account/${this.myAccount}`);
         this.balance = response.data.balance;
       } catch (error) {
-        console.error('잔액 조회 실패:', error);
+        console.error(this.$t('transfer.messages.balanceError'), error);
       }
     },
     async transfer() {
       try {
-        // Check sender account status
+        // 발신자 계좌 상태 확인
         const senderInfo = await api.get(`/user/${this.myAccount}`);
         if (senderInfo.data.isActive === 0) {
-          alert('Account is deactivated. Transfer cannot be processed.');
+          alert(this.$t('transfer.messages.inactive'));
           return;
         }
 
-        // Check recipient account information
+        // 수신자 계좌 정보 확인
         const accountInfo = await api.get(`/account/${this.receiverAccount}`);
         const userInfo = await api.get(`/user/${this.receiverAccount}`);
 
         if (this.myAccount == this.receiverAccount) {
-          alert('Cannot transfer to your own account.');
+          alert(this.$t('transfer.messages.selfTransfer'));
         } else if (userInfo.data.isActive == 0) {
-          alert('Transfer failed. Recipient account is deactivated.');
+          alert(this.$t('transfer.messages.receiverInactive'));
+        } else if (!accountInfo.data.userName) {
+          alert(this.$t('transfer.messages.noAccount'));
         } else if (
           confirm(
-            `Would you like to transfer $${Number(
-              this.amount
-            ).toLocaleString()} to ${accountInfo.data.userName}?\n(Total $${(
-              Number(this.amount) + 500
-            ).toLocaleString()} including $500 fee)`
+            this.$t('transfer.messages.confirm', {
+              name: accountInfo.data.userName,
+              amount: Number(this.amount).toLocaleString(),
+              fee: this.fee,
+              total: (Number(this.amount) + this.fee).toLocaleString(),
+            })
           )
         ) {
           const response = await api.post('/account/transfer', {
             senderAccount: this.myAccount,
             receiverAccount: Number(this.receiverAccount),
             amount: Number(this.amount),
+            fee: Number(this.fee),
           });
-
           if (response.data === 'success') {
-            alert('Transfer completed successfully!');
+            alert(this.$t('transfer.messages.success'));
             this.$router.push('/');
           } else {
-            alert('Transfer failed');
+            alert(this.$t('transfer.messages.fail'));
           }
         }
       } catch (error) {
-        console.error('Transfer failed:', error);
-        alert('Invalid account number.');
+        console.error(this.$t('transfer.messages.fail'), error);
+        alert(this.$t('transfer.messages.invalidAccount'));
+      }
+    },
+    async checkGameResult() {
+      const result = this.$route.query.result;
+      console.log(result);
+      if (result === undefined) return;
+      else {
+        this.fee = result === 'true' ? 50 : 500;
       }
     },
     goHome() {

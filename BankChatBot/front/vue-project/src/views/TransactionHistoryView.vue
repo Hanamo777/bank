@@ -1,4 +1,3 @@
-```vue
 <template>
   <div class="main-container">
     <!-- Header -->
@@ -6,22 +5,28 @@
     <!-- Main Content -->
     <main>
       <div class="transaction-container">
-        <h2 class="section-title">Transaction History</h2>
+        <h2 class="section-title">{{ $t('transaction.title') }}</h2>
         <table>
           <thead>
             <tr>
-              <th>Date/Time</th>
-              <th>Type</th>
-              <th>Account Holder</th>
-              <th>Amount</th>
-              <th>Balance</th>
+              <th>{{ $t('transaction.table.dateTime') }}</th>
+              <th>{{ $t('transaction.table.type') }}</th>
+              <th>{{ $t('transaction.table.accountHolder') }}</th>
+              <th>{{ $t('transaction.table.amount') }}</th>
+              <th>{{ $t('transaction.table.balance') }}</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(transaction, index) in transactions" :key="index">
               <td>{{ formatDateTime(transaction.transactionTime) }}</td>
               <td :class="getTransactionType(transaction)">
-                {{ isDeposit(transaction) ? 'Deposit' : 'Withdrawal' }}
+                {{
+                  $t(
+                    isDeposit(transaction)
+                      ? 'transaction.types.deposit'
+                      : 'transaction.types.withdraw'
+                  )
+                }}
               </td>
               <td>
                 {{
@@ -30,12 +35,14 @@
                     : transaction.receiverName
                 }}
               </td>
-              <td>${{ transaction.amount }}</td>
-              <td>${{ transaction.balanceAfter }}</td>
+              <td>{{ formatAmount(transaction.amount) }}원</td>
+              <td>{{ formatAmount(transaction.balanceAfter) }}원</td>
             </tr>
           </tbody>
         </table>
-        <button class="home-button" @click="goHome">Home</button>
+        <button class="home-button" @click="goHome">
+          {{ $t('transaction.buttons.home') }}
+        </button>
       </div>
     </main>
   </div>
@@ -44,11 +51,16 @@
 <script>
 import Header from '@/components/Header.vue';
 import { api } from '@/api';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'TransactionHistoryView',
   components: {
     Header,
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -85,6 +97,9 @@ export default {
     formatDateTime(dateTime) {
       return new Date(dateTime).toLocaleString();
     },
+    formatAmount(amount) {
+      return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    },
     isDeposit(transaction) {
       return transaction.receiverAccount === this.myAccount;
     },
@@ -96,7 +111,7 @@ export default {
         const response = await api.get(`/account/history/${this.myAccount}`);
         this.transactions = response.data;
       } catch (error) {
-        console.error('transaction history load failed:', error);
+        console.error('거래내역 조회 실패:', error);
       }
     },
     goHome() {
@@ -110,58 +125,6 @@ export default {
 .main-container {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif;
-}
-
-.header {
-  padding: 0 2rem;
-}
-
-.top-menu {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5rem 0;
-  font-size: 0.875rem;
-  color: #777;
-}
-
-.left-menu span,
-.right-menu span {
-  margin: 0 1rem;
-  cursor: pointer;
-}
-
-.main-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
-  border-bottom: 1px solid #eee;
-}
-
-.nav-items span {
-  margin: 0 1.5rem;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.nav-icons button {
-  margin-left: 1rem;
-}
-
-.chat-btn {
-  background-color: #00857e;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 1.5rem;
-  border: none;
-  cursor: pointer;
-}
-
-.search-btn,
-.menu-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
 }
 
 .transaction-container {
@@ -226,4 +189,3 @@ td {
   background-color: #006c64;
 }
 </style>
-```

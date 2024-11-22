@@ -2,23 +2,27 @@
   <Header></Header>
   <div class="account-container">
     <div class="account-box">
-      <h2 class="section-title">Administrator's Account</h2>
+      <h2 class="section-title">{{ $t('admin.title') }}</h2>
       <div class="info-box">
         <div class="account-info">
-          <h3>Account Number: {{ accountNumber }}</h3>
-          <h3>Balance</h3>
-          <p class="balance">${{ balance.toLocaleString() }}</p>
+          <h3>{{ $t('admin.accountNumber', { number: accountNumber }) }}</h3>
+          <h3>{{ $t('admin.balance') }}</h3>
+          <p class="balance">
+            {{ $t('admin.amount', { amount: balance.toLocaleString() }) }}
+          </p>
         </div>
       </div>
       <div class="button-group">
-        <button class="transfer-button" @click="showTransfer">Transfer</button>
+        <button class="transfer-button" @click="showTransfer">
+          {{ $t('admin.buttons.transfer') }}
+        </button>
         <button class="history-button" @click="showHistory">
-          Transaction History
+          {{ $t('admin.buttons.history') }}
         </button>
         <button class="activetoggle-button" @click="showUsers">
-          Account Management
+          {{ $t('admin.buttons.manage') }}
         </button>
-        <!-- <button class="logout-button" @click="logout">Logout</button> -->
+        <!-- <button class="logout-button" @click="logout">{{ $t('admin.buttons.logout') }}</button> -->
       </div>
     </div>
   </div>
@@ -27,11 +31,16 @@
 <script>
 import Header from '@/components/Header.vue';
 import { api } from '@/api';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'AccountView',
   components: {
     Header,
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -56,7 +65,7 @@ export default {
         const response = await api.get(`/account/${this.accountNumber}`);
         this.balance = response.data.balance;
       } catch (error) {
-        console.error('Account Loading Failed:', error);
+        console.error(this.$t('admin.messages.error'), error);
       }
     },
     showTransfer() {
@@ -150,13 +159,15 @@ export default {
 }
 
 .history-button,
-.logout-button {
+.logout-button,
+.activetoggle-button {
   background-color: #e9ecef;
   color: #495057;
 }
 
 .history-button:hover,
-.logout-button:hover {
+.logout-button:hover,
+.activetoggle-button:hover {
   background-color: #dee2e6;
 }
 </style>

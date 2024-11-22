@@ -1,0 +1,310 @@
+{
+  "header": {
+    "menu": {
+      "corporate": "法人バンキング",
+      "card": "ハナカード",
+      "about": "銀行紹介",
+      "career": "採用案内",
+      "certification": "認証センター",
+      "language": "Language"
+    },
+    "auth": {
+      "login": "ログイン",
+      "logout": "ログアウト",
+      "welcome": "{name} 様"
+    },
+    "nav": {
+      "bank": "ハナ銀行",
+      "inquiry": "照会",
+      "transfer": "振込",
+      "bills": "公共料金",
+      "forex": "外国為替",
+      "products": "金融商品",
+      "search": "検索",
+      "menu": "メニュー"
+    },
+    "chat": {
+      "ask": "ハイボットに聞く"
+    }
+  },
+  "main": {
+    "carousel": {
+      "slide1": {
+        "tag": "イベント",
+        "title": "受験生を応援します\n心を送金しよう",
+        "desc": "応援メッセージカードを送って\n楽しい夕食も一緒に！",
+        "button": "詳細を見る"
+      },
+      "slide2": {
+        "tag": "特別イベント",
+        "title": "年末調整特典\n最大10%キャッシュバック",
+        "desc": "年末を迎え、特別な特典をお楽しみください！",
+        "button": "今すぐ参加"
+      },
+      "slide3": {
+        "tag": "お知らせ",
+        "title": "モバイルバンキングアプリ更新\nより便利な機能",
+        "desc": "新しく改善された機能でより早く簡単に！",
+        "button": "更新を確認"
+      }
+    },
+    "quickMenu": {
+      "history": "取引履歴",
+      "transfer": "振込",
+      "bills": "公共料金",
+      "exchange": "為替レート",
+      "openBanking": "オープンバンキング",
+      "security": "認証センター",
+      "quickView": "クイック照会",
+      "customerService": "カスタマーセンター"
+    },
+    "bottomMenu": {
+      "savings": {
+        "title": "預金",
+        "desc": "お金を増やすコツ"
+      },
+      "fund": {
+        "title": "ファンド",
+        "desc": "ファンドランキング一覧"
+      },
+      "forex": {
+        "title": "外貨ウォレット",
+        "desc": "賢い外貨両替"
+      },
+      "pension": {
+        "title": "退職年金",
+        "desc": "安心な老後のために"
+      },
+      "loan": {
+        "title": "ローン",
+        "desc": "3分で限度額チェック！"
+      }
+    },
+    "news": {
+      "title": "お知らせ",
+      "more": "もっと見る",
+      "items": {
+        "1": {
+          "title": "国税庁連携パブリックマイデータサービス一時中断のお知らせ",
+          "date": "2024-11-15"
+        },
+        "2": {
+          "title": "一部金融取引業務中断のお知らせ",
+          "date": "2024-11-15"
+        },
+        "3": {
+          "title": "ハナ銀行オフラインイベント代行社選定公告",
+          "date": "2024-11-15"
+        }
+      }
+    }
+  },
+  "messages": {
+    "loginRequired": "ログインが必要なサービスです。",
+    "logoutConfirm": "ログアウトしますか？",
+    "success": "正常に処理されました。",
+    "error": "エラーが発生しました。",
+    "sessionExpired": "セッションが切れました。再度ログインしてください。"
+  },
+  "transaction": {
+    "title": "取引履歴",
+    "table": {
+      "dateTime": "日付/時間",
+      "type": "区分",
+      "accountHolder": "預金主",
+      "amount": "金額",
+      "balance": "残高"
+    },
+    "types": {
+      "deposit": "入金",
+      "withdraw": "出金"
+    },
+    "buttons": {
+      "home": "メインへ"
+    }
+  },
+  "chat": {
+    "title": "ハイボットバンク",
+    "placeholder": "メッセージを入力してください",
+    "send": "送信",
+    "close": "閉じる",
+    "botName": "ハイボットバンク",
+    "error": "メッセージの送信中にエラーが発生しました"
+  },
+  "account": {
+    "title": "{name}様の口座",
+    "accountNumber": "口座番号 : {number}",
+    "balance": "残高",
+    "amount": "￦{amount}",
+    "buttons": {
+      "transfer": "振込",
+      "history": "取引履歴",
+      "game": "King Sejong"
+    },
+    "messages": {
+      "inactive": "この口座は非アクティブ状態です。",
+      "error": "口座照会に失敗しました"
+    }
+  },
+  "admin": {
+    "title": "管理者口座",
+    "accountNumber": "口座番号 : {number}",
+    "balance": "残高",
+    "amount": "￦{amount}",
+    "buttons": {
+      "transfer": "振込",
+      "history": "取引履歴",
+      "manage": "口座管理",
+      "logout": "ログアウト"
+    },
+    "messages": {
+      "error": "口座照会に失敗しました"
+    }
+  },
+  "exchange": {
+    "title": "現在の為替レート",
+    "loading": "読み込み中...",
+    "error": "為替レートの取得に失敗しました。もう一度お試しください。",
+    "table": {
+      "currency": "通貨",
+      "buyRate": "買取レート",
+      "buySpread": "買取スプレッド",
+      "sellRate": "売却レート",
+      "sellSpread": "売却スプレッド",
+      "baseRate": "基準レート"
+    }
+  },
+  "login": {
+    "title": "ログイン",
+    "form": {
+      "userId": "ユーザーID",
+      "userIdPlaceholder": "IDを入力してください",
+      "password": "パスワード",
+      "passwordPlaceholder": "パスワードを入力してください"
+    },
+    "buttons": {
+      "login": "ログイン",
+      "register": "会員登録"
+    },
+    "help": {
+      "findId": "IDを探す",
+      "findPassword": "パスワードを探す",
+      "certificate": "証明書ログイン"
+    },
+    "messages": {
+      "failure": "ログインに失敗しました",
+      "error": "ログインに失敗しました："
+    }
+  },
+  "referral": {
+    "title": "紹介者はいらっしゃいますか？",
+    "form": {
+      "id": "紹介者ID",
+      "placeholder": "紹介者IDを入力してください"
+    },
+    "buttons": {
+      "submit": "入力",
+      "skip": "スキップ"
+    },
+    "messages": {
+      "confirm": "紹介者情報が正しいかご確認ください：\nID：{id}\n名前：{name}",
+      "success": "紹介成功！",
+      "noUser": "該当する紹介者が見つかりません。",
+      "error": "該当するIDのユーザー情報が見つかりません。"
+    }
+  },
+  "register": {
+    "title": "会員登録",
+    "form": {
+      "userId": {
+        "label": "ID",
+        "placeholder": "使用するIDを入力してください"
+      },
+      "password": {
+        "label": "パスワード",
+        "placeholder": "パスワードを入力してください",
+        "hint": "英数字、特殊文字を組み合わせて8-20文字"
+      },
+      "name": {
+        "label": "お名前",
+        "placeholder": "お名前を入力してください"
+      }
+    },
+    "info": {
+      "title": "ご注意事項",
+      "points": {
+        "account": "登録時に自動的に口座が開設されます。",
+        "referral": "紹介者入力時に確認手続きが行われます。",
+        "login": "登録完了後、ログインページに移動します。"
+      }
+    },
+    "buttons": {
+      "register": "登録",
+      "cancel": "キャンセル"
+    },
+    "messages": {
+      "noId": "IDを入力してください。",
+      "invalidId": "IDは英数字のみ使用可能です。",
+      "invalidPassword": "パスワードは英数字、特殊文字を組み合わせて8-20文字で入力してください。",
+      "noName": "お名前を入力してください。",
+      "duplicateId": "このIDは既に使用されています。",
+      "error": "登録に失敗しました："
+    }
+  },
+  "transfer": {
+    "title": "振込",
+    "balance": "現在残高：￦{amount}",
+    "form": {
+      "receiverAccount": {
+        "label": "振込先口座番号",
+        "placeholder": "振込先の口座番号を入力してください"
+      },
+      "amount": {
+        "label": "振込金額",
+        "placeholder": "振込金額を入力してください"
+      }
+    },
+    "fee": {
+      "label": "手数料：￦{amount}",
+      "total": "合計金額：￦{amount}"
+    },
+    "buttons": {
+      "transfer": "振込実行",
+      "home": "メインへ"
+    },
+    "messages": {
+      "balanceError": "残高照会に失敗しました：",
+      "inactive": "口座が非アクティブ状態です。振込できません。",
+      "selfTransfer": "自分の口座への振込はできません。",
+      "receiverInactive": "振込先の口座が非アクティブ状態のため、振込できません。",
+      "noAccount": "該当する口座が存在しません。",
+      "confirm": "{name}様に￦{amount}を振込みますか？\n(手数料￦{fee}を含む合計￦{total})",
+      "success": "振込が完了しました！",
+      "fail": "振込に失敗しました",
+      "invalidAccount": "無効な口座番号です。"
+    }
+  },
+  "userList": {
+    "title": "ユーザーリスト",
+    "table": {
+      "id": "ID",
+      "password": "パスワード",
+      "name": "名前",
+      "accountNumber": "口座番号",
+      "status": "口座状態"
+    },
+    "status": {
+      "active": "アクティブ",
+      "inactive": "非アクティブ"
+    },
+    "buttons": {
+      "home": "メインへ"
+    },
+    "messages": {
+      "error": {
+        "fetch": "ユーザーリストの取得に失敗しました：",
+        "status": "アカウント状態の変更に失敗しました"
+      }
+    }
+  }
+}

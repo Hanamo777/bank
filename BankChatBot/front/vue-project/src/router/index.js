@@ -7,8 +7,9 @@ import TransactionHistoryView from "../views/TransactionHistoryView.vue";
 import ReferralBonusView from "@/views/ReferralBonusView.vue";
 import HanabankView from "@/views/HanabankView.vue";
 import AdminView from "@/views/AdminView.vue";
-import UsersView from "@/views/UserListView.vue";
 import UserListView from "@/views/UserListView.vue";
+import GameView from "@/views/GameView.vue";
+import ExchangeRateView from "@/views/ExchangeRateView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,6 +58,16 @@ const router = createRouter({
       path: "/userlist",
       name: "userlist",
       component: UserListView,
+    },
+    {
+      path: "/game",
+      name: "game",
+      component: GameView,
+    },
+    {
+      path: "/exchange",
+      name: "exchange",
+      component: ExchangeRateView,
     },
   ],
 });

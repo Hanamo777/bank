@@ -11,6 +11,7 @@ public class TransactionDTO {
     private int balanceAfter;    // 추가
     private String senderName;
     private String receiverName;
+    private int fee;
                 
  // getter/setter 추가
 	 public int getBalanceAfter() {
@@ -63,4 +64,10 @@ public class TransactionDTO {
     public void setTransactionTime(LocalDateTime transactionTime) {
         this.transactionTime = transactionTime;
     }
+	public int getFee() {
+		return fee;
+	}
+	public void setFee(int fee) {
+		this.fee = fee;
+	}
 }

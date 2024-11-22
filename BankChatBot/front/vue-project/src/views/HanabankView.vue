@@ -1,18 +1,120 @@
 <template>
   <div class="main-container">
+    <!-- Header -->
     <Header></Header>
+    <!-- Main Content -->
     <main>
-      <!-- Slider Section -->
       <section class="slider-section">
-        <div class="slider-content">
-          <div class="event-tag">Event</div>
-          <h1>Supporting Students<br />Send Your Heart with Money</h1>
-          <p>Send a supportive message card<br />and enjoy dinner together!</p>
-          <button class="cta-button">Learn More</button>
-        </div>
-        <div class="slider-controls">
-          <span>1 / 6</span>
-          <button class="dots-menu">···</button>
+        <div
+          id="carouselExample"
+          class="carousel slide"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+              <div
+                class="d-flex flex-column justify-content-center align-items-start text-white p-5"
+                style="min-height: 400px; background-color: #a2e9b4"
+              >
+                <div
+                  class="event-tag bg-light text-success p-2 rounded-pill d-inline-block mb-3"
+                >
+                  {{ $t('main.carousel.slide1.tag') }}
+                </div>
+                <h1
+                  class="display-4"
+                  v-html="
+                    $t('main.carousel.slide1.title').replace('\n', '<br />')
+                  "
+                ></h1>
+                <p
+                  class="lead"
+                  v-html="
+                    $t('main.carousel.slide1.desc').replace('\n', '<br />')
+                  "
+                ></p>
+                <button class="btn btn-light mt-4">
+                  {{ $t('main.carousel.slide1.button') }}
+                </button>
+              </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+              <div
+                class="d-flex flex-column justify-content-center align-items-start text-white p-5"
+                style="min-height: 400px; background-color: #ffa07a"
+              >
+                <div
+                  class="event-tag bg-light text-danger p-2 rounded-pill d-inline-block mb-3"
+                >
+                  {{ $t('main.carousel.slide2.tag') }}
+                </div>
+                <h1
+                  class="display-4"
+                  v-html="
+                    $t('main.carousel.slide2.title').replace('\n', '<br />')
+                  "
+                ></h1>
+                <p
+                  class="lead"
+                  v-html="
+                    $t('main.carousel.slide2.desc').replace('\n', '<br />')
+                  "
+                ></p>
+                <button class="btn btn-light mt-4">
+                  {{ $t('main.carousel.slide2.button') }}
+                </button>
+              </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="carousel-item">
+              <div
+                class="d-flex flex-column justify-content-center align-items-start text-white p-5"
+                style="min-height: 400px; background-color: #87ceeb"
+              >
+                <div
+                  class="event-tag bg-light text-primary p-2 rounded-pill d-inline-block mb-3"
+                >
+                  {{ $t('main.carousel.slide3.tag') }}
+                </div>
+                <h1
+                  class="display-4"
+                  v-html="
+                    $t('main.carousel.slide3.title').replace('\n', '<br />')
+                  "
+                ></h1>
+                <p
+                  class="lead"
+                  v-html="
+                    $t('main.carousel.slide3.desc').replace('\n', '<br />')
+                  "
+                ></p>
+                <button class="btn btn-light mt-4">
+                  {{ $t('main.carousel.slide3.button') }}
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Carousel Controls -->
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExample"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExample"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
       </section>
 
@@ -20,87 +122,74 @@
       <section class="quick-menu-grid">
         <div class="menu-card" @click="handleInquiry">
           <HomeIcon class="icon" />
-          <span>Transaction History</span>
+          <span>{{ $t('main.quickMenu.history') }}</span>
         </div>
         <div class="menu-card" @click="handleTransfer">
           <TransferIcon class="icon" />
-          <span>Transfer</span>
+          <span>{{ $t('main.quickMenu.transfer') }}</span>
         </div>
         <div class="menu-card">
           <BillIcon class="icon" />
-          <span>Public Utilities</span>
+          <span>{{ $t('main.quickMenu.bills') }}</span>
         </div>
-        <div class="menu-card">
+        <div class="menu-card" @click="exchange">
           <ExchangeIcon class="icon" />
-          <span>Exchange Rate</span>
+          <span>{{ $t('main.quickMenu.exchange') }}</span>
         </div>
         <div class="menu-card">
           <OpenBankingIcon class="icon" />
-          <span>Open Banking</span>
+          <span>{{ $t('main.quickMenu.openBanking') }}</span>
         </div>
         <div class="menu-card">
           <SecurityIcon class="icon" />
-          <span>Authentication Center</span>
+          <span>{{ $t('main.quickMenu.security') }}</span>
         </div>
         <div class="menu-card">
           <QuickViewIcon class="icon" />
-          <span>Quick View</span>
+          <span>{{ $t('main.quickMenu.quickView') }}</span>
         </div>
         <div class="menu-card">
           <CustomerServiceIcon class="icon" />
-          <span>Customer Service</span>
+          <span>{{ $t('main.quickMenu.customerService') }}</span>
         </div>
       </section>
 
       <!-- Bottom Menu -->
       <section class="bottom-menu">
         <div class="menu-item">
-          <h3>Savings</h3>
-          <p>Tips for Building Wealth</p>
+          <h3>{{ $t('main.bottomMenu.savings.title') }}</h3>
+          <p>{{ $t('main.bottomMenu.savings.desc') }}</p>
         </div>
         <div class="menu-item">
-          <h3>Funds</h3>
-          <p>Fund Rankings at a Glance</p>
+          <h3>{{ $t('main.bottomMenu.fund.title') }}</h3>
+          <p>{{ $t('main.bottomMenu.fund.desc') }}</p>
         </div>
         <div class="menu-item">
-          <h3>Exchange Wallet</h3>
-          <p>Smart Currency Exchange</p>
+          <h3>{{ $t('main.bottomMenu.forex.title') }}</h3>
+          <p>{{ $t('main.bottomMenu.forex.desc') }}</p>
         </div>
         <div class="menu-item">
-          <h3>Retirement Pension</h3>
-          <p>For a Secure Retirement</p>
+          <h3>{{ $t('main.bottomMenu.pension.title') }}</h3>
+          <p>{{ $t('main.bottomMenu.pension.desc') }}</p>
         </div>
         <div class="menu-item">
-          <h3>Loans</h3>
-          <p>3-Minute Limit Check!</p>
+          <h3>{{ $t('main.bottomMenu.loan.title') }}</h3>
+          <p>{{ $t('main.bottomMenu.loan.desc') }}</p>
         </div>
       </section>
 
       <!-- News Section -->
       <section class="news-section">
         <div class="news-header">
-          <h3>News</h3>
-          <button>View More</button>
+          <h3>{{ $t('main.news.title') }}</h3>
+          <button>{{ $t('main.news.more') }}</button>
         </div>
         <ul class="news-list">
-          <li>
-            <span class="news-title"
-              >Notice: Temporary Service Suspension for National Tax Service
-              MyData Service</span
-            >
-            <span class="news-date">2024-11-15</span>
-          </li>
-          <li>
-            <span class="news-title"
-              >Notice: Partial Financial Transaction Service Suspension</span
-            >
-            <span class="news-date">2024-11-15</span>
-          </li>
-          <li>
-            <span class="news-title"
-              >Announcement: Selection of Hana Bank Offline Event Agency</span
-            >
-            <span class="news-date">2024-11-15</span>
+          <li v-for="i in 3" :key="i">
+            <span class="news-title">{{
+              $t(`main.news.items.${i}.title`)
+            }}</span>
+            <span class="news-date">{{ $t(`main.news.items.${i}.date`) }}</span>
           </li>
         </ul>
       </section>
@@ -120,6 +209,7 @@ import {
   QuickViewIcon,
   CustomerServiceIcon,
 } from '@/components/Icons.vue';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'HanabankView',
@@ -133,6 +223,10 @@ export default {
     QuickViewIcon,
     CustomerServiceIcon,
     Header,
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -159,7 +253,7 @@ export default {
     },
     handleTransfer() {
       if (!this.isLoggedIn) {
-        alert('Login required for this service.');
+        alert(this.$t('messages.loginRequired'));
         this.$router.push('/login');
         return;
       }
@@ -167,17 +261,21 @@ export default {
     },
     handleInquiry() {
       if (!this.isLoggedIn) {
-        alert('Login required for this service.');
+        alert(this.$t('messages.loginRequired'));
         this.$router.push('/login');
         return;
       }
       this.$router.push('/history');
+    },
+    exchange() {
+      this.$router.push('/exchange');
     },
   },
 };
 </script>
 
 <style scoped>
+/* 기존 스타일 유지 */
 .main-container {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif;
@@ -237,10 +335,6 @@ export default {
 
 .slider-section {
   position: relative;
-  background-color: #a2e9b4;
-  padding: 3rem 2rem;
-  min-height: 400px;
-  background-image: url('@/assets/chalkboard.jpg');
   background-size: cover;
   background-position: center;
   color: white;
@@ -255,7 +349,6 @@ export default {
 .event-tag {
   display: inline-block;
   padding: 0.25rem 1rem;
-  background-color: rgba(0, 255, 98, 0.2);
   border-radius: 1rem;
 }
 

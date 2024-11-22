@@ -2,41 +2,67 @@
   <header class="header">
     <div class="top-menu">
       <div class="left-menu">
-        <span>Corporate Banking</span>
-        <span>Hana Card</span>
-        <span>About Bank</span>
-        <span>Careers</span>
+        <span>{{ $t('header.menu.corporate') }}</span>
+        <span>{{ $t('header.menu.card') }}</span>
+        <span>{{ $t('header.menu.about') }}</span>
+        <span>{{ $t('header.menu.career') }}</span>
       </div>
       <div class="right-menu">
         <template v-if="isLoggedIn">
-          <span>{{ userName }}</span>
-          <span @click="handleLogout">Logout</span>
+          <span>{{ $t('header.auth.welcome', { name: userName }) }}</span>
+          <span @click="handleLogout">{{ $t('header.auth.logout') }}</span>
         </template>
         <template v-else>
-          <router-link to="/login">Login</router-link>
+          <router-link to="/login">{{ $t('header.auth.login') }}</router-link>
         </template>
-        <span>Authentication Center</span>
-        <span>Language</span>
+        <span>{{ $t('header.menu.certification') }}</span>
+        <div class="language-selector">
+          <span @click="toggleLanguageMenu">Language</span>
+          <div v-if="showLanguageMenu" class="language-dropdown">
+            <div
+              @click="changeLanguage('ko')"
+              :class="{ active: currentLocale === 'ko' }"
+            >
+              한국어
+            </div>
+            <div
+              @click="changeLanguage('en')"
+              :class="{ active: currentLocale === 'en' }"
+            >
+              English
+            </div>
+            <div
+              @click="changeLanguage('ja')"
+              :class="{ active: currentLocale === 'ja' }"
+            >
+              日本語
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <nav class="main-nav">
       <div class="logo">
-        <span class="text-xl font-bold text-green-600" @click="goMain"
-          >Hana Bank</span
-        >
+        <span class="text-xl font-bold text-green-600" @click="goMain">{{
+          $t('header.nav.bank')
+        }}</span>
       </div>
       <div class="nav-items">
-        <span @click="goAccount">Account</span>
-        <span class="menu-card" @click="handleTransfer">Transfer</span>
-        <span>Public Utilities</span>
-        <span>Foreign Exchange</span>
-        <span>Financial Products</span>
+        <span @click="goAccount">{{ $t('header.nav.inquiry') }}</span>
+        <span class="menu-card" @click="handleTransfer">{{
+          $t('header.nav.transfer')
+        }}</span>
+        <span>{{ $t('header.nav.bills') }}</span>
+        <span>{{ $t('header.nav.forex') }}</span>
+        <span>{{ $t('header.nav.products') }}</span>
       </div>
       <div class="nav-icons">
-        <button class="chat-btn" @click="openChat">Ask Hana Bot</button>
-        <button class="search-btn">Search</button>
-        <button class="menu-btn">Menu</button>
+        <button class="chat-btn" @click="openChat">
+          {{ $t('header.chat.ask') }}
+        </button>
+        <button class="search-btn">{{ $t('header.nav.search') }}</button>
+        <button class="menu-btn">{{ $t('header.nav.menu') }}</button>
       </div>
     </nav>
     <chat-popup ref="chatPopup" />
@@ -45,16 +71,24 @@
 
 <script>
 import ChatPopup from './ChatPopup.vue';
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: 'Header',
   components: {
     ChatPopup,
+  },
+  setup() {
+    const { locale } = useI18n();
+    return { locale };
   },
   data() {
     return {
       isLoggedIn: false,
       userName: '',
       userId: '',
+      showLanguageMenu: false,
+      currentLocale: 'ko',
     };
   },
   created() {
@@ -80,7 +114,7 @@ export default {
     },
     handleTransfer() {
       if (!this.isLoggedIn) {
-        alert('Login required for this service.');
+        alert(this.$t('messages.loginRequired'));
         this.$router.push('/login');
         return;
       }
@@ -91,7 +125,7 @@ export default {
     },
     goAccount() {
       if (!this.isLoggedIn) {
-        alert('Login required for this service.');
+        alert(this.$t('messages.loginRequired'));
         this.$router.push('/login');
         return;
       }
@@ -103,6 +137,14 @@ export default {
     },
     openChat() {
       this.$refs.chatPopup.isOpen = true;
+    },
+    toggleLanguageMenu() {
+      this.showLanguageMenu = !this.showLanguageMenu;
+    },
+    changeLanguage(lang) {
+      this.currentLocale = lang;
+      this.locale = lang;
+      this.showLanguageMenu = false;
     },
   },
 };
@@ -161,5 +203,37 @@ export default {
   background: none;
   border: none;
   cursor: pointer;
+}
+
+.language-selector {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.language-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.language-dropdown div {
+  padding: 8px 16px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.language-dropdown div:hover {
+  background: #f5f5f5;
+}
+
+.language-dropdown div.active {
+  background: #e8f5e9;
+  color: #00857e;
 }
 </style>

@@ -1,11 +1,20 @@
 # Project site link
+
 http://54.180.119.166
 
 # Banking and Chatbot System
 
+# Language select
+
+In the upper right corner, you can choose the language.
+"画面右上から言語を選択することができます。"
+우측 상단에서 언어를 선택하실 수 있습니다.
+
+![click chat bot](./images/lang1.png)
+
 ## 📌 Project Introduction
 
-You can use AI chat bot and Banking CRUD.
+You can use AI chat bot and Banking System.
 
 ## 🚀 Main Functions
 
@@ -20,7 +29,18 @@ You can use AI chat bot and Banking CRUD.
 
 ![click chat bot](./images/chatbot2.png)
 
-### 2. Banking (CRUD)
+### 2. Foreign exchange rate
+
+- Click on 'Exchange Rate' in main page.
+
+![click chat bot](./images/exchange1.png)
+
+- You can move Exchange Rate information.
+- It is conneted by API (Real-time information)
+
+![click chat bot](./images/exchange2.png)
+
+### 3. Banking (CRUD)
 
 #### Create
 
@@ -91,9 +111,11 @@ You can use AI chat bot and Banking CRUD.
 ### External API
 
 - Chat GPT API
+- Exchange Rate API
 
 ## 💻 System Architecture
 
 Frontend (Vue.js) <-> Backend (Spring) <-> Database (MySQL)
 ↕
 Chat GPT API
+Exchange Rate API

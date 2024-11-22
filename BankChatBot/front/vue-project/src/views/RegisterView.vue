@@ -1,50 +1,54 @@
 <template>
   <div class="main-container">
-    <!-- Header -->
     <Header></Header>
-    <!-- Main Content -->
     <main>
       <div class="register-container">
         <div class="register-box">
-          <h2 class="section-title">Sign Up</h2>
+          <h2 class="section-title">{{ $t('register.title') }}</h2>
           <div class="register-form">
             <div class="input-group">
-              <label>ID</label>
-              <input type="text" v-model="userId" placeholder="Enter your ID" />
+              <label>{{ $t('register.form.userId.label') }}</label>
+              <input
+                type="text"
+                v-model="userId"
+                :placeholder="$t('register.form.userId.placeholder')"
+              />
             </div>
 
             <div class="input-group">
-              <label>Password</label>
+              <label>{{ $t('register.form.password.label') }}</label>
               <input
                 type="password"
                 v-model="password"
-                placeholder="Enter your password"
+                :placeholder="$t('register.form.password.placeholder')"
               />
-              <p class="input-hint">
-                8-20 characters with letters, numbers, and special characters
-              </p>
+              <p class="input-hint">{{ $t('register.form.password.hint') }}</p>
             </div>
 
             <div class="input-group">
-              <label>Name</label>
-              <input type="text" v-model="name" placeholder="Enter your name" />
+              <label>{{ $t('register.form.name.label') }}</label>
+              <input
+                type="text"
+                v-model="name"
+                :placeholder="$t('register.form.name.placeholder')"
+              />
             </div>
             <div class="info-box">
-              <h3>Registration Notes</h3>
+              <h3>{{ $t('register.info.title') }}</h3>
               <ul>
-                <li>
-                  An account will be automatically created upon registration.
-                </li>
-                <li>Referral verification will be processed if provided.</li>
-                <li>
-                  You will be redirected to the login page after completion.
-                </li>
+                <li>{{ $t('register.info.points.account') }}</li>
+                <li>{{ $t('register.info.points.referral') }}</li>
+                <li>{{ $t('register.info.points.login') }}</li>
               </ul>
             </div>
 
             <div class="button-group">
-              <button class="register-button" @click="register">Sign Up</button>
-              <button class="cancel-button" @click="goToLogin">Cancel</button>
+              <button class="register-button" @click="register">
+                {{ $t('register.buttons.register') }}
+              </button>
+              <button class="cancel-button" @click="goToLogin">
+                {{ $t('register.buttons.cancel') }}
+              </button>
             </div>
           </div>
         </div>
@@ -56,10 +60,16 @@
 <script>
 import Header from '@/components/Header.vue';
 import { api } from '@/api';
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: 'RegisterView',
   components: {
     Header,
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -70,20 +80,36 @@ export default {
   },
   methods: {
     async register() {
-      try {
-        const response = await api.post('/user/register', {
-          userId: this.userId,
-          password: this.password,
-          name: this.name,
-          accountNumber: 1, // Temporary set to 1
-        });
+      const validIDPattern = /^[a-zA-Z0-9]*$/;
+      const validPasswordPattern =
+        /^[a-zA-Z0-9!@#$%^&*()_+~\-={}[\]:;"'<>,.?/|]{8,20}$/;
+      if (!this.userId) {
+        alert(this.$t('register.messages.noId'));
+      } else if (!validIDPattern.test(this.userId)) {
+        alert(this.$t('register.messages.invalidId'));
+        this.userId = '';
+      } else if (!validPasswordPattern.test(this.password)) {
+        alert(this.$t('register.messages.invalidPassword'));
+        this.password = '';
+      } else if (!this.name) {
+        alert(this.$t('register.messages.noName'));
+      } else {
+        try {
+          const response = await api.post('/user/register', {
+            userId: this.userId,
+            password: this.password,
+            name: this.name,
+            accountNumber: 1,
+          });
 
-        console.log('Registration response:', response.data.value);
-        if (response.data === 'success') {
-          this.$router.push('/referral-bonus');
+          if (response.data === 'success') {
+            this.$router.push('/referral-bonus');
+          } else {
+            alert(this.$t('register.messages.duplicateId'));
+          }
+        } catch (error) {
+          console.error(this.$t('register.messages.error'), error);
         }
-      } catch (error) {
-        console.error('Registration failed:', error);
       }
     },
     goToLogin() {

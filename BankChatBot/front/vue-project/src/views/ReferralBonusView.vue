@@ -1,25 +1,27 @@
-```vue
 <template>
   <div class="main-container">
-    <!-- Header -->
     <Header></Header>
     <main>
       <div class="register-container">
         <div class="register-box">
-          <h2 class="section-title">Do you have a referrer?</h2>
+          <h2 class="section-title">{{ $t('referral.title') }}</h2>
           <div class="register-form">
             <div class="input-group">
-              <label>Referrer ID</label>
+              <label>{{ $t('referral.form.id') }}</label>
               <input
                 type="text"
                 v-model="userId"
-                placeholder="Please enter referrer ID"
+                :placeholder="$t('referral.form.placeholder')"
               />
             </div>
 
             <div class="button-group">
-              <button class="register-button" @click="register">Submit</button>
-              <button class="cancel-button" @click="goToLogin">Skip</button>
+              <button class="register-button" @click="register">
+                {{ $t('referral.buttons.submit') }}
+              </button>
+              <button class="cancel-button" @click="goToLogin">
+                {{ $t('referral.buttons.skip') }}
+              </button>
             </div>
           </div>
         </div>
@@ -27,13 +29,20 @@
     </main>
   </div>
 </template>
+
 <script>
 import Header from '@/components/Header.vue';
 import { api } from '@/api';
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: 'ReferralBonusView',
   components: {
     Header,
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -43,7 +52,6 @@ export default {
   methods: {
     async register() {
       try {
-        // First check receiver's account information
         const accountInfo = await api.get(`/account/find/${this.userId}`);
         if (
           accountInfo.data.userId != undefined &&
@@ -51,32 +59,33 @@ export default {
         ) {
           if (
             confirm(
-              `Please confirm if the referrer ID and name are correct:
-                ID: ${accountInfo.data.userId}
-                Name: ${accountInfo.data.userName}`
+              this.$t('referral.messages.confirm', {
+                id: accountInfo.data.userId,
+                name: accountInfo.data.userName,
+              })
             )
           ) {
             const response = await api.post('/account/transfer', {
               senderAccount: 0,
               receiverAccount: Number(accountInfo.data.accountNumber),
               amount: 2000,
+              fee: 50,
             });
 
             if (response.data === 'success') {
-              alert('Referral successful!');
+              alert(this.$t('referral.messages.success'));
               this.$router.push('/account');
             } else {
-              alert('Referrer not found.');
+              alert(this.$t('referral.messages.noUser'));
             }
           }
         } else {
-          alert('Referrer not found.');
+          alert(this.$t('referral.messages.noUser'));
           this.$router.push('/referral-bonus');
         }
       } catch (error) {
-        // Error handling when accountInfo fetch fails
-        console.error('No user found with this ID.');
-        alert('No user found with this ID.');
+        console.error(this.$t('referral.messages.error'));
+        alert(this.$t('referral.messages.error'));
         this.$router.push('/referral-bonus');
       }
     },

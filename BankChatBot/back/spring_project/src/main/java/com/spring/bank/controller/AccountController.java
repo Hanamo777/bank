@@ -28,11 +28,12 @@ public class AccountController {
     
     @PostMapping("/transfer")
     public String transfer(@RequestBody TransactionDTO transaction) {
-        System.out.println("이체 요청: " + transaction.getSenderAccount() + " -> " + transaction.getReceiverAccount());  // 디버깅용
+        System.out.println("이체 요청: " + transaction.getSenderAccount() + " -> " + transaction.getReceiverAccount() + "수수료:" + transaction.getFee());  // 디버깅용
         boolean result = accountService.transfer(
             transaction.getSenderAccount(), 
             transaction.getReceiverAccount(), 
-            transaction.getAmount()
+            transaction.getAmount(),
+            transaction.getFee()
         );
         return result ? "success" : "fail";
     }

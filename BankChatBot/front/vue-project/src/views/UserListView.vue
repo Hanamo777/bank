@@ -1,20 +1,17 @@
-```vue
 <template>
   <div class="main-container">
-    <!-- Header -->
     <Header></Header>
-    <!-- Main Content -->
     <main>
       <div class="userlist-container">
-        <h2 class="section-title">User List</h2>
+        <h2 class="section-title">{{ $t('userList.title') }}</h2>
         <table>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Password</th>
-              <th>Name</th>
-              <th>Account Number</th>
-              <th>Account Status</th>
+              <th>{{ $t('userList.table.id') }}</th>
+              <th>{{ $t('userList.table.password') }}</th>
+              <th>{{ $t('userList.table.name') }}</th>
+              <th>{{ $t('userList.table.accountNumber') }}</th>
+              <th>{{ $t('userList.table.status') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -24,12 +21,18 @@
               <td>{{ user.name }}</td>
               <td>{{ user.accountNumber }}</td>
               <td @click="toggleActive(user)">
-                {{ user.isActive ? 'Active' : 'Inactive' }}
+                {{
+                  user.isActive
+                    ? $t('userList.status.active')
+                    : $t('userList.status.inactive')
+                }}
               </td>
             </tr>
           </tbody>
         </table>
-        <button class="home-button" @click="goHome">Home</button>
+        <button class="home-button" @click="goHome">
+          {{ $t('userList.buttons.home') }}
+        </button>
       </div>
     </main>
   </div>
@@ -38,11 +41,16 @@
 <script>
 import Header from '@/components/Header.vue';
 import { api } from '@/api';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'UserListView',
   components: {
     Header,
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -81,7 +89,7 @@ export default {
         const response = await api.get(`/admin/users`);
         this.users = response.data;
       } catch (error) {
-        console.error('Failed to fetch user list:', error);
+        console.error(this.$t('userList.messages.error.fetch'), error);
       }
     },
     async toggleActive(user) {
@@ -92,7 +100,7 @@ export default {
         });
         user.isActive = newStatus;
       } catch (error) {
-        console.log('Failed to change account status');
+        console.log(this.$t('userList.messages.error.status'));
       }
     },
     goHome() {

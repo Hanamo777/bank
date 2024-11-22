@@ -27,10 +27,10 @@ public class AccountService {
     
     // 계좌 이체
     @Transactional
-    public boolean transfer(int senderAccount, int receiverAccount, int amount) {
+    public boolean transfer(int senderAccount, int receiverAccount, int amount, int fee) {
         // 송신자 계좌 확인
         AccountDTO sender = accountMapper.getAccount(senderAccount);
-        if(sender.getBalance() < amount + 500) { // 수수료 500원 포함
+        if(sender.getBalance() < amount + fee) { // 수수료 500원 포함
             return false;
         }
         
@@ -41,7 +41,7 @@ public class AccountService {
         }
         
         // 송신자 잔액 감소
-        sender.setBalance(sender.getBalance() - amount - 500);
+        sender.setBalance(sender.getBalance() - amount - fee);
         accountMapper.updateBalance(sender);
         
         // 수신자 잔액 증가
@@ -52,7 +52,7 @@ public class AccountService {
         TransactionDTO senderTx = new TransactionDTO();
         senderTx.setSenderAccount(senderAccount);
         senderTx.setReceiverAccount(receiverAccount);
-        senderTx.setAmount(amount + 500); // 수수료 포함
+        senderTx.setAmount(amount + fee); // 수수료 포함
         senderTx.setBalanceAfter(sender.getBalance());
         accountMapper.saveTransaction(senderTx);
         

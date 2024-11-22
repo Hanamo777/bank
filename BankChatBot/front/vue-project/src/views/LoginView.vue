@@ -1,39 +1,42 @@
-```vue
 <template>
   <div class="main-container">
-    <!-- Header -->
     <Header></Header>
-    <!-- Main Content -->
     <main>
       <div class="login-container">
         <div class="login-box">
-          <h2 class="section-title">Login</h2>
+          <h2 class="section-title">{{ $t('login.title') }}</h2>
           <div class="login-form">
             <div class="input-group">
-              <label>I D</label>
-              <input type="text" v-model="userId" placeholder="put your id" />
+              <label>{{ $t('login.form.userId') }}</label>
+              <input
+                type="text"
+                v-model="userId"
+                :placeholder="$t('login.form.userIdPlaceholder')"
+              />
             </div>
 
             <div class="input-group">
-              <label>password</label>
+              <label>{{ $t('login.form.password') }}</label>
               <input
                 type="password"
                 v-model="password"
-                placeholder="put your password"
+                :placeholder="$t('login.form.passwordPlaceholder')"
               />
             </div>
 
             <div class="button-group">
-              <button class="login-button" @click="login">Login</button>
+              <button class="login-button" @click="login">
+                {{ $t('login.buttons.login') }}
+              </button>
               <button class="register-button" @click="showRegister">
-                Register
+                {{ $t('login.buttons.register') }}
               </button>
             </div>
 
             <div class="help-links">
-              <span>Find ID</span>
-              <span>Find Password</span>
-              <span>Certificate Login</span>
+              <span>{{ $t('login.help.findId') }}</span>
+              <span>{{ $t('login.help.findPassword') }}</span>
+              <span>{{ $t('login.help.certificate') }}</span>
             </div>
           </div>
         </div>
@@ -45,10 +48,16 @@
 <script>
 import Header from '@/components/Header.vue';
 import { api } from '@/api';
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: 'LoginView',
   components: {
     Header,
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -63,7 +72,6 @@ export default {
           userId: this.userId,
           password: this.password,
         });
-        // console.log(response);
         if (response.data) {
           localStorage.setItem('user', JSON.stringify(response.data));
           if (response.data.userId == 0) {
@@ -72,11 +80,11 @@ export default {
             this.$router.push('/');
           }
         } else {
-          alert('Login failed');
+          alert(this.$t('login.messages.failure'));
         }
       } catch (error) {
-        console.error('Login failed:', error);
-        alert('Login failed');
+        console.error(this.$t('login.messages.error'), error);
+        alert(this.$t('login.messages.failure'));
       }
     },
     showRegister() {
