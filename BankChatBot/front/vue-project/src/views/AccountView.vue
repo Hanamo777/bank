@@ -21,9 +21,9 @@
         <button class="history-button" @click="showHistory">
           {{ $t('account.buttons.history') }}
         </button>
-        <button class="game-button" @click="showGame">
+        <!--<button class="game-button" @click="showGame">
           {{ $t('account.buttons.game') }}
-        </button>
+        </button>-->
       </div>
     </div>
   </div>
