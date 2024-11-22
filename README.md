@@ -6,9 +6,9 @@ http://54.180.119.166
 
 # Language select
 
-In the upper right corner, you can choose the language.
-"画面右上から言語を選択することができます。"
-우측 상단에서 언어를 선택하실 수 있습니다.
+- In the upper right corner, you can choose the language.
+- "画面右上から言語を選択することができます。"
+- 우측 상단에서 언어를 선택하실 수 있습니다.
 
 ![click chat bot](./images/lang1.png)
 
