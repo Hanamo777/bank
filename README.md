@@ -70,14 +70,14 @@ You can use AI chat bot and Banking System.
 
 ![click chat bot](./images/update1.png)
 
-- if you click "Transaction History" on you can find change
+- if you click "Transaction History", you can find change
 
 ![click chat bot](./images/update2.png)
 
 #### Delete
 
-- Account deactivation function through admin account
-- Block deposits and withdrawals for deactivated accounts
+- Account de-activation function through admin account
+- Block deposits and withdrawals for de-activated accounts
 
 - You can access admin account by login (id : 0, pw : 0)
 
@@ -117,5 +117,5 @@ You can use AI chat bot and Banking System.
 
 Frontend (Vue.js) <-> Backend (Spring) <-> Database (MySQL)
 ↕
-Chat GPT API
-Exchange Rate API
+-Chat GPT API
+-Exchange Rate API
