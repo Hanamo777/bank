@@ -10,6 +10,7 @@ import AdminView from "@/views/AdminView.vue";
 import UserListView from "@/views/UserListView.vue";
 import GameView from "@/views/GameView.vue";
 import ExchangeRateView from "@/views/ExchangeRateView.vue";
+import ForeignAccountView from "@/views/ForeignAccountView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -68,6 +69,11 @@ const router = createRouter({
       path: "/exchange",
       name: "exchange",
       component: ExchangeRateView,
+    },
+    {
+      path: "/foreign-account",
+      name: "foreignAccount",
+      component: ForeignAccountView,
     },
   ],
 });

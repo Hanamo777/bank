@@ -21,50 +21,25 @@
     </update>
     
     <insert id="saveTransaction" parameterType="com.spring.bank.dto.TransactionDTO">
-    INSERT INTO transactions (sender_account, receiver_account, amount, transaction_time, balance_after)
-    VALUES (#{senderAccount}, #{receiverAccount}, #{amount}, NOW(), #{balanceAfter})
+	    INSERT INTO transactions (sender_account, receiver_account, amount, transaction_time, sender_balance_after, receiver_balance_after)
+	    VALUES (#{senderAccount}, #{receiverAccount}, #{amount}, NOW(), #{senderBalanceAfter}, #{receiverBalanceAfter})
 	</insert>
 
 	<select id="getTransactionHistory" parameterType="int" resultType="com.spring.bank.dto.TransactionDTO">
-    SELECT filtered.*, 
-           sender_user.name as senderName,
-           receiver_user.name as receiverName
-    FROM (
-        SELECT 
-            t.*,
-            CASE 
-                WHEN t.sender_account = #{accountNumber} 
-                    AND t.amount = (
-                        SELECT MAX(amount) 
-                        FROM transactions 
-                        WHERE transaction_time = t.transaction_time
-                        AND (sender_account = #{accountNumber} OR receiver_account = #{accountNumber})
-                    )
-                    THEN 1
-                WHEN t.receiver_account = #{accountNumber} 
-                    AND t.amount = (
-                        SELECT MIN(amount) 
-                        FROM transactions 
-                        WHERE transaction_time = t.transaction_time
-                        AND (sender_account = #{accountNumber} OR receiver_account = #{accountNumber})
-                    )
-                    THEN 1
-                ELSE 0
-            END as is_valid
-        FROM transactions t
-        WHERE t.sender_account = #{accountNumber} 
-        OR t.receiver_account = #{accountNumber}
-    ) filtered
-    JOIN accounts sender_acc ON filtered.sender_account = sender_acc.account_number
-    JOIN users sender_user ON sender_acc.user_id = sender_user.user_id
-    JOIN accounts receiver_acc ON filtered.receiver_account = receiver_acc.account_number
-    JOIN users receiver_user ON receiver_acc.user_id = receiver_user.user_id
-    WHERE is_valid = 1
-    ORDER BY transaction_time DESC
+		SELECT 
+		    t.*,
+		    sender.name as senderName,
+		    receiver.name as receiverName
+		FROM transactions t
+		JOIN users sender ON t.sender_account = sender.account_number
+		JOIN users receiver ON t.receiver_account = receiver.account_number
+		WHERE t.sender_account = #{accountNumber} 
+		   OR t.receiver_account = #{accountNumber}
+		ORDER BY transaction_time DESC
 	</select>
-    
+	    
     <insert id="createAccount" parameterType="com.spring.bank.dto.AccountDTO">
-    INSERT INTO accounts (account_number, balance, user_id) 
-    VALUES (#{accountNumber}, #{balance}, #{userId})
+	    INSERT INTO accounts (account_number, balance, user_id) 
+	    VALUES (#{accountNumber}, #{balance}, #{userId})
 	</insert>
 </mapper>

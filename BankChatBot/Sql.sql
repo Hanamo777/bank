@@ -1,5 +1,4 @@
 DROP DATABASE IF EXISTS bank_db;
-
 CREATE DATABASE bank_db 
 CHARACTER SET = utf8mb4 
 COLLATE = utf8mb4_unicode_ci;
@@ -27,7 +26,8 @@ CREATE TABLE transactions (
   receiver_account INT,
   amount INT,
   transaction_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-  balance_after INT,
+  sender_balance_after INT,
+  receiver_balance_after INT,
   FOREIGN KEY (sender_account) REFERENCES accounts(account_number),
   FOREIGN KEY (receiver_account) REFERENCES accounts(account_number)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -37,3 +37,6 @@ VALUES (0, 0, 'admin', 0);
 
 INSERT INTO accounts 
 VALUES (0, 1000000000, 0);
+
+select * from transactions;
+select * from users;

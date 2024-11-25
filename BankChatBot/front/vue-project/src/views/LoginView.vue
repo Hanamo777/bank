@@ -4,10 +4,10 @@
     <main>
       <div class="login-container">
         <div class="login-box">
-          <h2 class="section-title">{{ $t('login.title') }}</h2>
+          <h2 class="section-title">{{ $t("login.title") }}</h2>
           <div class="login-form">
             <div class="input-group">
-              <label>{{ $t('login.form.userId') }}</label>
+              <label>{{ $t("login.form.userId") }}</label>
               <input
                 type="text"
                 v-model="userId"
@@ -16,7 +16,7 @@
             </div>
 
             <div class="input-group">
-              <label>{{ $t('login.form.password') }}</label>
+              <label>{{ $t("login.form.password") }}</label>
               <input
                 type="password"
                 v-model="password"
@@ -26,17 +26,17 @@
 
             <div class="button-group">
               <button class="login-button" @click="login">
-                {{ $t('login.buttons.login') }}
+                {{ $t("login.buttons.login") }}
               </button>
               <button class="register-button" @click="showRegister">
-                {{ $t('login.buttons.register') }}
+                {{ $t("login.buttons.register") }}
               </button>
             </div>
 
             <div class="help-links">
-              <span>{{ $t('login.help.findId') }}</span>
-              <span>{{ $t('login.help.findPassword') }}</span>
-              <span>{{ $t('login.help.certificate') }}</span>
+              <span>{{ $t("login.help.findId") }}</span>
+              <span>{{ $t("login.help.findPassword") }}</span>
+              <span>{{ $t("login.help.certificate") }}</span>
             </div>
           </div>
         </div>
@@ -46,12 +46,12 @@
 </template>
 
 <script>
-import Header from '@/components/Header.vue';
-import { api } from '@/api';
-import { useI18n } from 'vue-i18n';
+import Header from "@/components/Header.vue";
+import { api } from "@/api";
+import { useI18n } from "vue-i18n";
 
 export default {
-  name: 'LoginView',
+  name: "LoginView",
   components: {
     Header,
   },
@@ -61,34 +61,30 @@ export default {
   },
   data() {
     return {
-      userId: '',
-      password: '',
+      userId: "",
+      password: "",
     };
   },
   methods: {
     async login() {
       try {
-        const response = await api.post('/user/login', {
+        const response = await api.post("/user/login", {
           userId: this.userId,
           password: this.password,
         });
         if (response.data) {
-          localStorage.setItem('user', JSON.stringify(response.data));
-          if (response.data.userId == 0) {
-            this.$router.push('/admin');
-          } else {
-            this.$router.push('/');
-          }
+          localStorage.setItem("user", JSON.stringify(response.data));
+          this.$router.push("/");
         } else {
-          alert(this.$t('login.messages.failure'));
+          alert(this.$t("login.messages.failure"));
         }
       } catch (error) {
-        console.error(this.$t('login.messages.error'), error);
-        alert(this.$t('login.messages.failure'));
+        console.error(this.$t("login.messages.error"), error);
+        alert(this.$t("login.messages.failure"));
       }
     },
     showRegister() {
-      this.$router.push('/register');
+      this.$router.push("/register");
     },
   },
 };
@@ -96,8 +92,8 @@ export default {
 
 <style scoped>
 .main-container {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
 }
 
 .header {

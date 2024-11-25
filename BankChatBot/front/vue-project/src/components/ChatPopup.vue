@@ -125,19 +125,16 @@ export default {
           content: this.userInput,
         });
 
-        const response = await fetch(
-          'http://54.180.119.166:8080/api/chat/send',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              message: this.userInput,
-              userId: userId,
-            }),
-          }
-        );
+        const response = await fetch('http://localhost:8080/api/chat/send', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: this.userInput,
+            userId: userId,
+          }),
+        });
 
         const botResponse = await response.json();
 

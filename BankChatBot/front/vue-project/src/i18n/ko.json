@@ -267,8 +267,8 @@
       }
     },
     "fee": {
-      "label": "수수료: {amount}원",
-      "total": "총 금액: {amount}원"
+      "label": "수수료: {amount}",
+      "total": "총 금액: {amount}"
     },
     "buttons": {
       "transfer": "이체하기",
@@ -281,6 +281,7 @@
       "receiverInactive": "이체할 수 없습니다. 상대 계좌는 비활성화 상태입니다.",
       "noAccount": "해당 계좌가 없습니다.",
       "confirm": "{name}님에게 {amount}원을 이체하시겠습니까?\n(수수료 {fee}원 포함 총 {total}원)",
+      "confirm2": "{name}님에게 {amount}달러를 이체하시겠습니까?\n(수수료 {fee}달러 포함 총 {total}달러)",
       "success": "이체가 완료되었습니다!",
       "fail": "이체 실패",
       "invalidAccount": "유효하지 않은 계좌번호입니다."

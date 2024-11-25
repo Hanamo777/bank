@@ -2,20 +2,20 @@
   <header class="header">
     <div class="top-menu">
       <div class="left-menu">
-        <span>{{ $t('header.menu.corporate') }}</span>
-        <span>{{ $t('header.menu.card') }}</span>
-        <span>{{ $t('header.menu.about') }}</span>
-        <span>{{ $t('header.menu.career') }}</span>
+        <span>{{ $t("header.menu.corporate") }}</span>
+        <span>{{ $t("header.menu.card") }}</span>
+        <span>{{ $t("header.menu.about") }}</span>
+        <span>{{ $t("header.menu.career") }}</span>
       </div>
       <div class="right-menu">
         <template v-if="isLoggedIn">
-          <span>{{ $t('header.auth.welcome', { name: userName }) }}</span>
-          <span @click="handleLogout">{{ $t('header.auth.logout') }}</span>
+          <span>{{ $t("header.auth.welcome", { name: userName }) }}</span>
+          <span @click="handleLogout">{{ $t("header.auth.logout") }}</span>
         </template>
         <template v-else>
-          <router-link to="/login">{{ $t('header.auth.login') }}</router-link>
+          <router-link to="/login">{{ $t("header.auth.login") }}</router-link>
         </template>
-        <span>{{ $t('header.menu.certification') }}</span>
+        <span>{{ $t("header.menu.certification") }}</span>
         <div class="language-selector">
           <span @click="toggleLanguageMenu">Language</span>
           <div v-if="showLanguageMenu" class="language-dropdown">
@@ -45,24 +45,24 @@
     <nav class="main-nav">
       <div class="logo">
         <span class="text-xl font-bold text-green-600" @click="goMain">{{
-          $t('header.nav.bank')
+          $t("header.nav.bank")
         }}</span>
       </div>
       <div class="nav-items">
-        <span @click="goAccount">{{ $t('header.nav.inquiry') }}</span>
+        <span @click="goAccount">{{ $t("header.nav.inquiry") }}</span>
         <span class="menu-card" @click="handleTransfer">{{
-          $t('header.nav.transfer')
+          $t("header.nav.transfer")
         }}</span>
-        <span>{{ $t('header.nav.bills') }}</span>
-        <span>{{ $t('header.nav.forex') }}</span>
-        <span>{{ $t('header.nav.products') }}</span>
+        <span>{{ $t("header.nav.bills") }}</span>
+        <span @click="goForeignAccount">{{ $t("header.nav.forex") }}</span>
+        <span>{{ $t("header.nav.products") }}</span>
       </div>
       <div class="nav-icons">
         <button class="chat-btn" @click="openChat">
-          {{ $t('header.chat.ask') }}
+          {{ $t("header.chat.ask") }}
         </button>
-        <button class="search-btn">{{ $t('header.nav.search') }}</button>
-        <button class="menu-btn">{{ $t('header.nav.menu') }}</button>
+        <button class="search-btn">{{ $t("header.nav.search") }}</button>
+        <button class="menu-btn">{{ $t("header.nav.menu") }}</button>
       </div>
     </nav>
     <chat-popup ref="chatPopup" />
@@ -70,11 +70,11 @@
 </template>
 
 <script>
-import ChatPopup from './ChatPopup.vue';
-import { useI18n } from 'vue-i18n';
+import ChatPopup from "./ChatPopup.vue";
+import { useI18n } from "vue-i18n";
 
 export default {
-  name: 'Header',
+  name: "Header",
   components: {
     ChatPopup,
   },
@@ -85,10 +85,10 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-      userName: '',
-      userId: '',
+      userName: "",
+      userId: "",
       showLanguageMenu: false,
-      currentLocale: 'ko',
+      currentLocale: "ko",
     };
   },
   created() {
@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     checkLoginStatus() {
-      const user = JSON.parse(localStorage.getItem('user'));
+      const user = JSON.parse(localStorage.getItem("user"));
       if (user) {
         this.isLoggedIn = true;
         this.userName = user.name;
@@ -104,36 +104,33 @@ export default {
       }
     },
     handleLogout() {
-      const userId = JSON.parse(localStorage.getItem('user')).userId;
+      const userId = JSON.parse(localStorage.getItem("user")).userId;
       localStorage.removeItem(`chatMessages_${userId}`);
       localStorage.removeItem(`chatOpen_${userId}`);
-      localStorage.removeItem('user');
+      localStorage.removeItem("user");
       this.isLoggedIn = false;
-      this.userName = '';
-      this.$router.push('/login');
+      this.userName = "";
+      this.$router.push("/login");
     },
     handleTransfer() {
       if (!this.isLoggedIn) {
-        alert(this.$t('messages.loginRequired'));
-        this.$router.push('/login');
+        alert(this.$t("messages.loginRequired"));
+        this.$router.push("/login");
         return;
       }
-      this.$router.push('/transfer');
+      this.$router.push("/transfer");
     },
     goMain() {
-      this.$router.push('/');
+      this.$router.push("/");
     },
     goAccount() {
       if (!this.isLoggedIn) {
-        alert(this.$t('messages.loginRequired'));
-        this.$router.push('/login');
+        alert(this.$t("messages.loginRequired"));
+        this.$router.push("/login");
         return;
       }
-      if (this.userId == 0) {
-        this.$router.push('/admin');
-      } else {
-        this.$router.push('/account');
-      }
+
+      this.$router.push("/account");
     },
     openChat() {
       this.$refs.chatPopup.isOpen = true;
@@ -145,6 +142,9 @@ export default {
       this.currentLocale = lang;
       this.locale = lang;
       this.showLanguageMenu = false;
+    },
+    goForeignAccount() {
+      this.$router.push("/foreign-account");
     },
   },
 };

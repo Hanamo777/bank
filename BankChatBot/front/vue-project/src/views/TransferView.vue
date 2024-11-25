@@ -3,16 +3,16 @@
     <Header></Header>
     <main>
       <div class="transfer-container">
-        <h2 class="section-title">{{ $t('transfer.title') }}</h2>
+        <h2 class="section-title">{{ $t("transfer.title") }}</h2>
         <div class="transfer-form">
           <div class="info-box">
             <div class="balance-info">
-              {{ $t('transfer.balance', { amount: balance.toLocaleString() }) }}
+              {{ $t("transfer.balance", { amount: balance.toLocaleString() }) }}
             </div>
           </div>
 
           <div class="input-group">
-            <label>{{ $t('transfer.form.receiverAccount.label') }}</label>
+            <label>{{ $t("transfer.form.receiverAccount.label") }}</label>
             <input
               type="number"
               v-model="receiverAccount"
@@ -20,8 +20,37 @@
             />
           </div>
 
+          <div>
+            <div>
+              <input
+                type="radio"
+                v-model="isForeign"
+                :value="false"
+                @click="toggleCurrency"
+                name="accountType"
+                value="domestic"
+                checked
+                required
+              />
+              KRW
+            </div>
+            <div>
+              <input
+                type="radio"
+                v-model="isForeign"
+                @click="toggleCurrency"
+                name="accountType"
+                value="foreign"
+                required
+              />
+              USD
+            </div>
+          </div>
+
+          <hr />
+
           <div class="input-group">
-            <label>{{ $t('transfer.form.amount.label') }}</label>
+            <label>{{ $t("transfer.form.amount.label") }}</label>
             <input
               type="number"
               v-model="amount"
@@ -31,23 +60,33 @@
 
           <div class="fee-details">
             <div class="fee-info">
-              {{ $t('transfer.fee.label', { amount: fee }) }}
+              {{
+                $t("transfer.fee.label", {
+                  amount: isForeign
+                    ? ((amount * 0.01) / rates["KRW"]).toFixed(2)
+                    : fee,
+                })
+              }}
+              {{ isForeign ? "USD" : "KRW" }}
             </div>
             <div class="total-info">
               {{
-                $t('transfer.fee.total', {
-                  amount: (Number(amount) + fee).toLocaleString(),
+                $t("transfer.fee.total", {
+                  amount: (isForeign
+                    ? ((amount + fee) / rates["KRW"]).toFixed(2)
+                    : amount + fee
+                  ).toLocaleString(),
                 })
               }}
+              {{ isForeign ? "USD" : "KRW" }}
             </div>
           </div>
-
           <div class="button-group">
             <button class="transfer-button" @click="transfer">
-              {{ $t('transfer.buttons.transfer') }}
+              {{ $t("transfer.buttons.transfer") }}
             </button>
             <button class="home-button" @click="goHome">
-              {{ $t('transfer.buttons.home') }}
+              {{ $t("transfer.buttons.home") }}
             </button>
           </div>
         </div>
@@ -57,12 +96,13 @@
 </template>
 
 <script>
-import Header from '@/components/Header.vue';
-import { api } from '@/api';
-import { useI18n } from 'vue-i18n';
+import axios from "axios";
+import Header from "@/components/Header.vue";
+import { api } from "@/api";
+import { useI18n } from "vue-i18n";
 
 export default {
-  name: 'TransferView',
+  name: "TransferView",
   components: {
     Header,
   },
@@ -72,54 +112,79 @@ export default {
   },
   data() {
     return {
+      rates: {},
       balance: 0,
-      receiverAccount: '',
-      amount: '',
+      receiverAccount: "",
+      amount: "",
       myAccount: 0,
       isLoggedIn: false,
-      userName: '',
+      userName: "",
       fee: 500,
+      isForeign: false,
+      convertedAmount: 0,
+      convertedFee: 0,
     };
   },
   created() {
     this.checkLoginStatus();
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
-      this.$router.push('/');
+      this.$router.push("/");
       return;
     }
     this.myAccount = user.accountNumber;
     this.getBalance();
     this.checkGameResult();
+    this.fetchExchangeRates();
   },
   methods: {
+    async fetchExchangeRates() {
+      try {
+        // API 호출 URL - 여기서 'YOUR_API_KEY'는 가입 후 받은 API 키로 대체합니다.
+        //   b4d93b67845f9c2c19fa3ab2
+        const response = await axios.get(
+          "https://v6.exchangerate-api.com/v6/b4d93b67845f9c2c19fa3ab2/latest/USD"
+        );
+
+        // 환율 정보를 데이터에 저장
+        this.rates = response.data.conversion_rates;
+      } catch (error) {
+        this.error = "환율 정보를 가져오지 못했습니다. 다시 시도해주세요.";
+      } finally {
+        this.loading = false;
+      }
+    },
     checkLoginStatus() {
-      const user = JSON.parse(localStorage.getItem('user'));
+      const user = JSON.parse(localStorage.getItem("user"));
       if (user) {
         this.isLoggedIn = true;
         this.userName = user.name;
       }
     },
+    async toggleCurrency() {
+      this.isForeign = this.isForeign;
+    },
     handleLogout() {
-      localStorage.removeItem('user');
+      localStorage.removeItem("user");
       this.isLoggedIn = false;
-      this.userName = '';
-      this.$router.push('/login');
+      this.userName = "";
+      this.$router.push("/login");
     },
     async getBalance() {
       try {
         const response = await api.get(`/account/${this.myAccount}`);
         this.balance = response.data.balance;
       } catch (error) {
-        console.error(this.$t('transfer.messages.balanceError'), error);
+        console.error(this.$t("transfer.messages.balanceError"), error);
       }
     },
     async transfer() {
+      console.log(this.rates["KRW"]);
       try {
         // 발신자 계좌 상태 확인
         const senderInfo = await api.get(`/user/${this.myAccount}`);
         if (senderInfo.data.isActive === 0) {
-          alert(this.$t('transfer.messages.inactive'));
+          alert(this.$t("transfer.messages.inactive"));
           return;
         }
 
@@ -127,38 +192,79 @@ export default {
         const accountInfo = await api.get(`/account/${this.receiverAccount}`);
         const userInfo = await api.get(`/user/${this.receiverAccount}`);
 
-        if (this.myAccount == this.receiverAccount) {
-          alert(this.$t('transfer.messages.selfTransfer'));
-        } else if (userInfo.data.isActive == 0) {
-          alert(this.$t('transfer.messages.receiverInactive'));
-        } else if (!accountInfo.data.userName) {
-          alert(this.$t('transfer.messages.noAccount'));
-        } else if (
-          confirm(
-            this.$t('transfer.messages.confirm', {
-              name: accountInfo.data.userName,
-              amount: Number(this.amount).toLocaleString(),
-              fee: this.fee,
-              total: (Number(this.amount) + this.fee).toLocaleString(),
-            })
-          )
-        ) {
-          const response = await api.post('/account/transfer', {
-            senderAccount: this.myAccount,
-            receiverAccount: Number(this.receiverAccount),
-            amount: Number(this.amount),
-            fee: Number(this.fee),
-          });
-          if (response.data === 'success') {
-            alert(this.$t('transfer.messages.success'));
-            this.$router.push('/');
-          } else {
-            alert(this.$t('transfer.messages.fail'));
+        // 국내에서 국내 계좌
+        if (!this.isForeign) {
+          this.fee = 500;
+          if (this.myAccount == this.receiverAccount) {
+            alert(this.$t("transfer.messages.selfTransfer"));
+          } else if (userInfo.data.isActive == 0) {
+            alert(this.$t("transfer.messages.receiverInactive"));
+          } else if (!accountInfo.data.userName || this.receiverAccount == 0) {
+            alert(this.$t("transfer.messages.noAccount"));
+          } else if (
+            confirm(
+              this.$t("transfer.messages.confirm", {
+                name: accountInfo.data.userName,
+                amount: Number(this.amount).toLocaleString(),
+                fee: this.fee,
+                total: (Number(this.amount) + this.fee).toLocaleString(),
+              })
+            )
+          ) {
+            const response = await api.post("/account/transfer", {
+              senderAccount: this.myAccount,
+              receiverAccount: Number(this.receiverAccount),
+              amount: Number(this.amount),
+              fee: Number(this.fee),
+            });
+            if (response.data === "success") {
+              alert(this.$t("transfer.messages.success"));
+              this.$router.push("/");
+            } else {
+              alert(this.$t("transfer.messages.fail"));
+            }
+          }
+        }
+
+        // 국내에서 외화 계좌
+        else {
+          this.convertedAmount = (this.amount / this.rates["KRW"]).toFixed(2);
+          this.convertedFee = (this.convertedAmount * 0.01).toFixed(2);
+          if (userInfo.data.isActive == 0) {
+            alert(this.$t("transfer.messages.receiverInactive"));
+          } else if (!accountInfo.data.userName) {
+            alert(this.$t("transfer.messages.noAccount"));
+          } else if (this.myAccount != 0 && this.receiverAccount == 0) {
+            alert(this.$t("transfer.messages.noAccount"));
+          } else if (
+            confirm(
+              this.$t("transfer.messages.confirm2", {
+                name: accountInfo.data.userName,
+                amount: this.convertedAmount.toLocaleString(),
+                fee: this.convertedFee.toLocaleString(),
+                total: (
+                  Number(this.convertedAmount) + Number(this.convertedFee)
+                ).toLocaleString(),
+              })
+            )
+          ) {
+            const response = await api.post("/account/transfer", {
+              senderAccount: this.myAccount,
+              receiverAccount: Number(this.receiverAccount),
+              amount: Number(this.amount),
+              fee: Number(this.amount * 0.01),
+            });
+            if (response.data === "success") {
+              alert(this.$t("transfer.messages.success"));
+              this.$router.push("/");
+            } else {
+              alert(this.$t("transfer.messages.fail"));
+            }
           }
         }
       } catch (error) {
-        console.error(this.$t('transfer.messages.fail'), error);
-        alert(this.$t('transfer.messages.invalidAccount'));
+        console.error(this.$t("transfer.messages.fail"), error);
+        alert(this.$t("transfer.messages.invalidAccount"));
       }
     },
     async checkGameResult() {
@@ -166,11 +272,11 @@ export default {
       console.log(result);
       if (result === undefined) return;
       else {
-        this.fee = result === 'true' ? 50 : 500;
+        this.fee = result === "true" ? 50 : 500;
       }
     },
     goHome() {
-      this.$router.push('/');
+      this.$router.push("/");
     },
   },
 };
@@ -178,8 +284,8 @@ export default {
 
 <style scoped>
 .main-container {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
 }
 
 .header {

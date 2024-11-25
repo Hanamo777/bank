@@ -2,35 +2,20 @@
   <Header></Header>
   <div class="account-container">
     <div class="account-box">
-      <h2 class="section-title">
-        {{ $t("account.title", { name: userName }) }}
-      </h2>
+      <h2 class="section-title">{{ userName }}님의 외화계좌</h2>
       <div class="info-box">
         <div class="account-info">
-          <h3>{{ $t("account.accountNumber", { number: accountNumber }) }}</h3>
-          <h3>{{ $t("account.balance") }}</h3>
+          <h3>계좌번호 : {{ accountNumber }}</h3>
+          <h3>잔액</h3>
           <p class="balance">
-            {{ $t("account.amount", { amount: balance.toLocaleString() }) }}
+            {{ balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} USD
           </p>
         </div>
       </div>
       <div class="button-group">
-        <button class="transfer-button" @click="showTransfer">
-          {{ $t("account.buttons.transfer") }}
-        </button>
-        <button class="history-button" @click="showHistory">
-          {{ $t("account.buttons.history") }}
-        </button>
-        <!--<button class="game-button" @click="showGame">
-          {{ $t('account.buttons.game') }}
-        </button>-->
-        <button
-          v-if="accountNumber == 0"
-          class="activetoggle-button"
-          @click="showUsers"
-        >
-          계좌 관리
-        </button>
+        <button class="transfer-button" @click="showTransfer">계좌 이체</button>
+        <button class="history-button" @click="showHistory">거래 내역</button>
+        <!-- <button class="game-button" @click="showGame">King Sejong</button> -->
       </div>
     </div>
   </div>
@@ -39,16 +24,11 @@
 <script>
 import Header from "@/components/Header.vue";
 import { api } from "@/api";
-import { useI18n } from "vue-i18n";
 
 export default {
   name: "AccountView",
   components: {
     Header,
-  },
-  setup() {
-    const { t } = useI18n();
-    return { t };
   },
   data() {
     return {
@@ -72,15 +52,17 @@ export default {
   methods: {
     async getBalance() {
       try {
-        const response = await api.get(`/account/${this.accountNumber}`);
+        const response = await api.get(
+          `/account/foreign/${this.accountNumber}`
+        );
         this.balance = response.data.balance;
       } catch (error) {
-        console.error(this.$t("account.messages.error"), error);
+        console.error("계좌 조회 실패:", error);
       }
     },
     showTransfer() {
       if (this.userIsActive == 0) {
-        alert(this.$t("account.messages.inactive"));
+        alert("해당 계좌는 비활성화 상태입니다.");
       } else {
         this.$router.push("/transfer");
       }
@@ -90,9 +72,6 @@ export default {
     },
     showGame() {
       this.$router.push("/game");
-    },
-    showUsers() {
-      this.$router.push("/userlist");
     },
     logout() {
       localStorage.removeItem("user");
@@ -155,8 +134,7 @@ export default {
 .transfer-button,
 .history-button,
 .logout-button,
-.game-button,
-.activetoggle-button {
+.game-button {
   flex: 1;
   padding: 0.75rem;
   border: none;
@@ -177,16 +155,14 @@ export default {
 
 .history-button,
 .logout-button,
-.game-button,
-.activetoggle-button {
+.game-button {
   background-color: #e9ecef;
   color: #495057;
 }
 
 .history-button:hover,
 .logout-button:hover,
-.game-button:hover,
-.activetoggle-button:hover {
+.game-button:hover {
   background-color: #dee2e6;
 }
 </style>

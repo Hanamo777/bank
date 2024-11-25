@@ -265,8 +265,8 @@
       }
     },
     "fee": {
-      "label": "手数料：￦{amount}",
-      "total": "合計金額：￦{amount}"
+      "label": "手数料：{amount}",
+      "total": "合計金額：{amount}"
     },
     "buttons": {
       "transfer": "振込実行",
@@ -279,6 +279,7 @@
       "receiverInactive": "振込先の口座が非アクティブ状態のため、振込できません。",
       "noAccount": "該当する口座が存在しません。",
       "confirm": "{name}様に￦{amount}を振込みますか？\n(手数料￦{fee}を含む合計￦{total})",
+      "confirm2": "{name}様に${amount}を振込みますか？\n(手数料${fee}を含む合計${total})",
       "success": "振込が完了しました！",
       "fail": "振込に失敗しました",
       "invalidAccount": "無効な口座番号です。"

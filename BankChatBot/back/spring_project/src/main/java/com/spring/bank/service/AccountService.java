@@ -30,7 +30,7 @@ public class AccountService {
     public boolean transfer(int senderAccount, int receiverAccount, int amount, int fee) {
         // 송신자 계좌 확인
         AccountDTO sender = accountMapper.getAccount(senderAccount);
-        if(sender.getBalance() < amount + fee) { // 수수료 500원 포함
+        if(sender.getBalance() < amount + fee) {
             return false;
         }
         
@@ -48,21 +48,15 @@ public class AccountService {
         receiver.setBalance(receiver.getBalance() + amount);
         accountMapper.updateBalance(receiver);
         
-        // 송신자 거래내역 저장
-        TransactionDTO senderTx = new TransactionDTO();
-        senderTx.setSenderAccount(senderAccount);
-        senderTx.setReceiverAccount(receiverAccount);
-        senderTx.setAmount(amount + fee); // 수수료 포함
-        senderTx.setBalanceAfter(sender.getBalance());
-        accountMapper.saveTransaction(senderTx);
-        
-        // 수신자 거래내역 저장
-        TransactionDTO receiverTx = new TransactionDTO();
-        receiverTx.setSenderAccount(senderAccount);
-        receiverTx.setReceiverAccount(receiverAccount);
-        receiverTx.setAmount(amount);
-        receiverTx.setBalanceAfter(receiver.getBalance());
-        accountMapper.saveTransaction(receiverTx);
+        // 거래내역 저장 (하나의 트랜잭션으로 통합)
+        TransactionDTO transaction = new TransactionDTO();
+        transaction.setSenderAccount(senderAccount);
+        transaction.setReceiverAccount(receiverAccount);
+        transaction.setAmount(amount);
+        transaction.setFee(fee);
+        transaction.setSenderBalanceAfter(sender.getBalance());
+        transaction.setReceiverBalanceAfter(receiver.getBalance());
+        accountMapper.saveTransaction(transaction);
         
         return true;
     }

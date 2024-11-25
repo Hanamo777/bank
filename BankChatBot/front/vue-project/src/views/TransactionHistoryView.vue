@@ -36,7 +36,15 @@
                 }}
               </td>
               <td>{{ formatAmount(transaction.amount) }}원</td>
-              <td>{{ formatAmount(transaction.balanceAfter) }}원</td>
+              <td>
+                {{
+                  formatAmount(
+                    isDeposit(transaction)
+                      ? transaction.receiverBalanceAfter
+                      : transaction.senderBalanceAfter
+                  )
+                }}원
+              </td>
             </tr>
           </tbody>
         </table>

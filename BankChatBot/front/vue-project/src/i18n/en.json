@@ -265,8 +265,8 @@
       }
     },
     "fee": {
-      "label": "Fee: ₩{amount}",
-      "total": "Total Amount: ₩{amount}"
+      "label": "Fee: {amount}",
+      "total": "Total Amount: {amount}"
     },
     "buttons": {
       "transfer": "Transfer",
@@ -279,6 +279,7 @@
       "receiverInactive": "Cannot transfer. Recipient account is inactive.",
       "noAccount": "Account does not exist.",
       "confirm": "Would you like to transfer ₩{amount} to {name}?\n(Total ₩{total} including ₩{fee} fee)",
+      "confirm2": "Would you like to transfer ${amount} to {name}?\n(Total ${total} including ${fee} fee)",
       "success": "Transfer completed!",
       "fail": "Transfer failed",
       "invalidAccount": "Invalid account number."
