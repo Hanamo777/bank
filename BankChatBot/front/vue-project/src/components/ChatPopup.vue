@@ -125,7 +125,7 @@ export default {
           content: this.userInput,
         });
 
-        const response = await fetch('http://localhost:8080/api/chat/send', {
+        const response = await fetch('https://hanamo777.com/api/chat/send', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

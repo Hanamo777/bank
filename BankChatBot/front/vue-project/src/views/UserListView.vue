@@ -7,8 +7,7 @@
         <table>
           <thead>
             <tr>
-              <th>{{ $t('userList.table.id') }}</th>
-              <th>{{ $t('userList.table.password') }}</th>
+
               <th>{{ $t('userList.table.name') }}</th>
               <th>{{ $t('userList.table.accountNumber') }}</th>
               <th>{{ $t('userList.table.status') }}</th>
@@ -16,8 +15,7 @@
           </thead>
           <tbody>
             <tr v-for="(user, index) in users" :key="index">
-              <td>{{ user.userId }}</td>
-              <td>{{ user.password }}</td>
+
               <td>{{ user.name }}</td>
               <td>{{ user.accountNumber }}</td>
               <td @click="toggleActive(user)">
