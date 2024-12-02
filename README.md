@@ -1,6 +1,6 @@
 # Project site link
 
-http://54.180.119.166
+https://www.hanamo.com
 
 # Banking and Chatbot System
 
